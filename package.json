@@ -1,17 +1,12 @@
 {
-  "name": "my-astro-project",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "my-astro-site",
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "astro": "^5.9.2"
+    "astro": "^5.9.2" 
   }
 }
