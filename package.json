@@ -12,6 +12,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "astro": "^5.9.0"
+    "astro": "^5.9.2"
   }
 }
