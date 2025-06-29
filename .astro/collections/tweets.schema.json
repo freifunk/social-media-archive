@@ -1,0 +1,113 @@
+{
+  "$ref": "#/definitions/tweets",
+  "definitions": {
+    "tweets": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "username": {
+          "type": "string"
+        },
+        "tweetID": {
+          "type": "string"
+        },
+        "conversationID": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "likeCount": {
+          "type": "number"
+        },
+        "quoteCount": {
+          "type": "number"
+        },
+        "replyCount": {
+          "type": "number"
+        },
+        "retweetCount": {
+          "type": "number"
+        },
+        "isLiked": {
+          "type": "number"
+        },
+        "isRetweeted": {
+          "type": "number"
+        },
+        "path": {
+          "type": "string"
+        },
+        "addedToDatabaseAt": {
+          "type": "string"
+        },
+        "archivedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "isBookmarked": {
+          "type": "number"
+        },
+        "deletedTweetAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "deletedRetweetAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "deletedLikeAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "deletedBookmarkAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "tweetID",
+        "conversationID",
+        "createdAt",
+        "likeCount",
+        "quoteCount",
+        "replyCount",
+        "retweetCount",
+        "isLiked",
+        "isRetweeted",
+        "path",
+        "addedToDatabaseAt",
+        "archivedAt",
+        "deletedAt",
+        "isBookmarked",
+        "deletedTweetAt",
+        "deletedRetweetAt",
+        "deletedLikeAt",
+        "deletedBookmarkAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

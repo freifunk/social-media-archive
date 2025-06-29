@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from 'astro:content';
+import TweetPostLayout from '../../layouts/TweetPostLayout.astro';
+
+export async function getStaticPaths() {
+  const tweets = await getCollection('tweets');
+  return tweets.map(post => ({
+    params: { slug: post.data.tweetID}, props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<TweetPostLayout frontmatter={post.data}>
+  <Content />
+</TweetPostLayout>

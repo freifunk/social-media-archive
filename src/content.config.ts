@@ -17,5 +17,34 @@ const blog = defineCollection({
       tags: z.array(z.string())
     })
 });
+
+
+const tweets = defineCollection({
+  schema: z.object({
+    id: z.number(),
+    username: z.string(),
+    tweetID: z.string(),
+    conversationID: z.string(),
+    createdAt: z.string().datetime(), // or z.date() if you want to parse it
+    likeCount: z.number(),
+    quoteCount: z.number(),
+    replyCount: z.number(),
+    retweetCount: z.number(),
+    isLiked: z.number(),
+    isRetweeted: z.number(),
+    path: z.string(),
+    addedToDatabaseAt: z.string(),
+    archivedAt: z.string(),
+    deletedAt: z.string().nullable(),
+    isBookmarked: z.number(),
+    deletedTweetAt: z.string().nullable(),
+    deletedRetweetAt: z.string().nullable(),
+    deletedLikeAt: z.string().nullable(),
+    deletedBookmarkAt: z.string().nullable()
+  })
+});
+
+
+
 // Export a single `collections` object to register your collection(s)
-export const collections = { blog };
+export const collections = { blog, tweets };
