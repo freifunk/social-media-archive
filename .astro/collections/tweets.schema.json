@@ -45,7 +45,10 @@
           "type": "string"
         },
         "archivedAt": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "deletedAt": {
           "type": [

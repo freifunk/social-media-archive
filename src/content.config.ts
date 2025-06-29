@@ -34,7 +34,7 @@ const tweets = defineCollection({
     isRetweeted: z.number(),
     path: z.string(),
     addedToDatabaseAt: z.string(),
-    archivedAt: z.string(),
+    archivedAt: z.string().nullable(),
     deletedAt: z.string().nullable(),
     isBookmarked: z.number(),
     deletedTweetAt: z.string().nullable(),
