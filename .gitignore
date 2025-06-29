@@ -1,4 +1,4 @@
 # Ignore the tweets folder 
 
 node_modules/
-src/conent/tweets/
+src/content/tweets/
