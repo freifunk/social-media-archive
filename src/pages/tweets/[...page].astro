@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TweetPost from '../../components/TweetPost.astro';
+import Pagination from '../../components/Pagination.astro';
+import TweetCard from '../../components/TweetCard.astro';
+//const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+//const allPosts = await getCollection("tweets");
+
+const { page }: { 
+  page: { 
+    data: any[];
+    url: { prev?: string; next?: string };
+    currentPage: number;
+    lastPage: number;
+  } 
+} = Astro.props;
+
+const pageTitle = "Tweets";
+
+export async function getStaticPaths({ paginate }) {
+  // Get all tweets
+  const allTweets = await getCollection("tweets"); // or however you fetch tweets
+  
+  // Sort tweets (newest first, or however you want)
+  const sortedTweets = allTweets.sort((a, b) => 
+    new Date(b.data.createdAt).valueOf() - new Date(a.data.createdAt).valueOf()
+  );
+
+  // Create pages with X tweets each
+  return paginate(sortedTweets, {
+    pageSize: 5  // Adjust number of tweets per page
+  });
+}
+---
+<BaseLayout pageTitle={pageTitle}>
+  <h2>Lastest Tweets from Freifunk</h2>
+
+
+  {page.data.map((post) => (<TweetCard post={post} />))}
+
+  <Pagination page={page} />
+
+</BaseLayout>

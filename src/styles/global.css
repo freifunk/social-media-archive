@@ -63,15 +63,6 @@ h1 {
   display: unset;
 }
 
-.pagination a {
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
-  background: #eee;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-
 /* Why your screen needs to be smaller than 636px
 
 Because your CSS is doing mobile-first design — meaning:
