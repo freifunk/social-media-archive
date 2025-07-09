@@ -13,42 +13,44 @@ export interface Props {
     };
     body: string;
   };
+  expanded?: boolean;
 }
-
-const { post } = Astro.props;
+const { post, expanded = false } = Astro.props;
 const formattedDate = new Date(post.data.createdAt).toLocaleDateString();
-const truncatedBody = post.body.length > 200 ? post.body.substring(0, 200) + '...' : post.body;
+const tweetBody = expanded ? post.body : (post.body.length > 200 ? post.body.substring(0, 200) + '...' : post.body);
 ---
-
 <article class="tweet-card">
   <h3 class="tweet-title">
     <a href={`/tweets/${post.data.tweetID}/`} class="tweet-link">
       Tweet {post.data.tweetID}
     </a>
   </h3>
-  
+ 
   <div class="tweet-meta">
     <span>@{post.data.username}</span> •
     <span>Posted on {formattedDate}</span>
   </div>
-  
+ 
   <div class="tweet-content">
-    {truncatedBody}
+    {tweetBody}
   </div>
-  
+ 
   <div class="tweet-stats">
     <span>❤️ {post.data.likeCount}</span>
     <span>🔄 {post.data.retweetCount}</span>
     <span>💬 {post.data.replyCount}</span>
     {post.data.quoteCount > 0 && <span>💭 {post.data.quoteCount}</span>}
   </div>
-  
-  <div class="tweet-actions">
-    <a href={`/tweets/${post.data.tweetID}/`} class="read-more">
-      Read full tweet →
-    </a>
-  </div>
+ 
+  {!expanded && (
+    <div class="tweet-actions">
+      <a href={`/tweets/${post.data.tweetID}/`} class="read-more">
+        Read full tweet →
+      </a>
+    </div>
+  )}
 </article>
+
 
 <style>
   .tweet-card {
@@ -56,38 +58,31 @@ const truncatedBody = post.body.length > 200 ? post.body.substring(0, 200) + '..
     padding: 2rem 0;
     margin-bottom: 1rem;
   }
-
   .tweet-title {
     margin-top: 0;
   }
-
   .tweet-link {
     color: #6B46C1;
     text-decoration: underline;
   }
-
   .tweet-meta {
     color: #666;
     font-size: 0.9rem;
     margin-bottom: 1rem;
   }
-
   .tweet-content {
     margin-bottom: 1rem;
     line-height: 1.6;
   }
-
   .tweet-stats {
     color: #666;
     font-size: 0.8rem;
     display: flex;
     gap: 1rem;
   }
-
   .tweet-actions {
     margin-top: 1rem;
   }
-
   .read-more {
     color: #0066cc;
     text-decoration: none;
