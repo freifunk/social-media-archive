@@ -34,7 +34,7 @@ export async function getStaticPaths({ paginate }) {
 }
 ---
 <BaseLayout pageTitle={pageTitle}>
-  <h2>Lastest Tweets from Freifunk</h2>
+  <h2><i class="fab fa-twitter fa-icon social twitter"></i> Latest Tweets from Freifunk</h2>
 
 
   {page.data.map((post) => (<TweetCard post={post} />))}

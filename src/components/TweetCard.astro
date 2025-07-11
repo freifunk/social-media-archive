@@ -36,16 +36,16 @@ const tweetBody = expanded ? post.body : (post.body.length > 200 ? post.body.sub
   </div>
  
   <div class="stats">
-    <span>❤️ {post.data.likeCount}</span>
-    <span>🔄 {post.data.retweetCount}</span>
-    <span>💬 {post.data.replyCount}</span>
-    {post.data.quoteCount > 0 && <span>💭 {post.data.quoteCount}</span>}
+    <span><i class="fas fa-heart fa-icon heart"></i> {post.data.likeCount}</span>
+    <span><i class="fas fa-retweet fa-icon retweet"></i> {post.data.retweetCount}</span>
+    <span><i class="fas fa-comment fa-icon comment"></i> {post.data.replyCount}</span>
+    {post.data.quoteCount > 0 && <span><i class="fas fa-quote-left fa-icon quote"></i> {post.data.quoteCount}</span>}
   </div>
  
   {!expanded && (
     <div class="actions">
       <a href={`/tweets/${post.data.tweetID}/`} class="read-more">
-        Read full tweet →
+        Read full tweet <i class="fas fa-arrow-right fa-icon arrow"></i>
       </a>
     </div>
   )}

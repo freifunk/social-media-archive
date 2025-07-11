@@ -104,7 +104,62 @@
   font-size: var(--font-size-medium);
 }
 
-/* Arrow Utilities */
-.arrow {
+/* Font Awesome Icon Utilities */
+.fa-icon {
+  font-size: inherit;
+  transition: all var(--transition-fast);
+}
+
+.fa-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Icon Colors */
+.fa-icon.heart {
+  color: var(--icon-heart);
+}
+
+.fa-icon.retweet {
+  color: var(--icon-retweet);
+}
+
+.fa-icon.comment {
+  color: var(--icon-comment);
+}
+
+.fa-icon.quote {
+  color: var(--icon-quote);
+}
+
+.fa-icon.arrow {
   font-size: var(--font-size-xl);
+}
+
+/* Social Media Icons */
+.fa-icon.social {
+  font-size: var(--font-size-large);
+  margin-right: var(--spacing-xs);
+}
+
+.fa-icon.social.twitter {
+  color: var(--icon-twitter);
+}
+
+.fa-icon.social.github {
+  color: var(--icon-github);
+}
+
+.fa-icon.social.youtube {
+  color: var(--icon-youtube);
+}
+
+/* Icon hover effects */
+.fa-icon.social:hover {
+  opacity: 0.8;
+  transform: scale(1.15);
+}
+
+.stats .fa-icon:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
 }
