@@ -1,10 +1,10 @@
-# Astro Site with Dynamic Theming
+# Freifunk's Social Media Archive
 
-A customizable Astro site with dynamic logo support and theme configuration.
+A customizable Astro site designed for Freifunk as a Social Media Archiev explorer
 
 ## Logo Configuration
 
-This site supports dynamic logo loading for easy theming. Place your logo file in the `public/` directory with one of these names (in order of preference):
+This site supports dynamic logo loading for easy theming. Place your logo file in the `public/` directory with one of these names:
 
 1. `logo.png`
 2. `logo.svg` 
