@@ -1,5 +1,18 @@
 /* Navigation Styles */
 
+/* Main Header */
+.main-header {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.main-header nav {
+  display: flex;
+  align-items: center;
+}
+
 /* Hamburger Menu */
 .hamburger {
   padding-right: 20px;
@@ -18,10 +31,12 @@
 .nav-links {
   width: 100%;
   top: 5rem;
-  left: 48px;
+  right: 0;
   background-color: var(--color-secondary);
   display: none;
   margin: 0;
+  position: absolute;
+  z-index: 999;
 }
 
 .nav-links a {
@@ -47,11 +62,12 @@
 /* Desktop Navigation */
 @media screen and (min-width: 636px) {
   .nav-links {
-    margin-left: 5em;
+    margin-right: 0;
     display: block;
     position: static;
     width: auto;
     background: none;
+    z-index: auto;
   }
 
   .nav-links a {
@@ -61,6 +77,20 @@
 
   .hamburger {
     display: none;
+  }
+  
+  .main-header {
+    margin-top: var(--spacing-md);
+  }
+}
+
+/* Mobile adjustments for logo space */
+@media screen and (max-width: 636px) {
+  .nav-links {
+    top: 4rem;
+    right: var(--spacing-sm);
+    left: auto;
+    width: 200px;
   }
 }
 
