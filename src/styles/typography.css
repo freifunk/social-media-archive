@@ -1,0 +1,52 @@
+/* Typography Styles */
+h1 {
+  margin: var(--spacing-md) 0;
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-primary);
+}
+
+h2 {
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+h3 {
+  margin-top: 0;
+  color: var(--color-text-primary);
+}
+
+p {
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+}
+
+/* Link Styles */
+a {
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Text Utilities */
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-small {
+  font-size: var(--font-size-small);
+}
+
+.text-medium {
+  font-size: var(--font-size-medium);
+}
+
+.text-large {
+  font-size: var(--font-size-large);
+}

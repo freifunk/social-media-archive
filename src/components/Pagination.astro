@@ -17,13 +17,13 @@ const { page } = Astro.props;
 <nav class="pagination">
   <div class="pagination-button">
     {page.url.prev ? (
-      <a href={page.url.prev} class="nav-button">
-        <span class="nav-arrow">←</span>
+      <a href={page.url.prev} class="btn btn-primary">
+        <span class="arrow">←</span>
         Previous
       </a>
     ) : (
-      <span class="nav-button nav-button--disabled">
-        <span class="nav-arrow">←</span>
+      <span class="btn btn-primary btn-disabled">
+        <span class="arrow">←</span>
         Previous
       </span>
     )}
@@ -35,57 +35,15 @@ const { page } = Astro.props;
   
   <div class="pagination-button">
     {page.url.next ? (
-      <a href={page.url.next} class="nav-button">
+      <a href={page.url.next} class="btn btn-primary">
         Next
-        <span class="nav-arrow">→</span>
+        <span class="arrow">→</span>
       </a>
     ) : (
-      <span class="nav-button nav-button--disabled">
+      <span class="btn btn-primary btn-disabled">
         Next
-        <span class="nav-arrow">→</span>
+        <span class="arrow">→</span>
       </span>
     )}
   </div>
 </nav>
-
-<style>
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid #eee;
-  }
-
-  .pagination-info {
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  .nav-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 0.375rem;
-    color: #495057;
-    text-decoration: none;
-    transition: background-color 0.2s;
-  }
-
-  .nav-button:hover:not(.nav-button--disabled) {
-    background: #e9ecef;
-  }
-
-  .nav-button--disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .nav-arrow {
-    font-size: 1.2rem;
-  }
-</style>

@@ -1,0 +1,121 @@
+/* Navigation Styles */
+
+/* Main Header */
+.main-header {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.main-header nav {
+  display: flex;
+  align-items: center;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.hamburger .line {
+  display: block;
+  width: 40px;
+  height: 5px;
+  margin-bottom: 10px;
+  background-color: var(--color-secondary);
+}
+
+/* Navigation Links */
+.nav-links {
+  width: 100%;
+  top: 5rem;
+  right: 0;
+  background-color: var(--color-secondary);
+  display: none;
+  margin: 0;
+  position: absolute;
+  z-index: 999;
+}
+
+.nav-links a {
+  display: block;
+  text-align: center;
+  padding: 10px 0;
+  text-decoration: none;
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  background-color: var(--color-secondary-hover);
+}
+
+.expanded {
+  display: unset;
+}
+
+/* Desktop Navigation */
+@media screen and (min-width: 636px) {
+  .nav-links {
+    margin-right: 0;
+    display: block;
+    position: static;
+    width: auto;
+    background: none;
+    z-index: auto;
+  }
+
+  .nav-links a {
+    display: inline-block;
+    padding: 15px 20px;
+  }
+
+  .hamburger {
+    display: none;
+  }
+  
+  .main-header {
+    margin-top: var(--spacing-md);
+  }
+}
+
+/* Mobile adjustments for logo space */
+@media screen and (max-width: 636px) {
+  .nav-links {
+    top: 4rem;
+    right: var(--spacing-sm);
+    left: auto;
+    width: 200px;
+  }
+}
+
+/* Footer Navigation */
+footer {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.pagination-info {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-medium);
+}
+
+.pagination-button .btn {
+  /* Inherits from .btn in components.css */
+}

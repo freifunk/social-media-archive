@@ -1,8 +1,12 @@
 ---
 import Header from '../components/header.astro';
 import Footer from '../components/footer.astro';
+import { getLogoPath, getLogoAlt } from '../config/site';
 import '../styles/global.css';
 const { pageTitle } = Astro.props;
+
+const logoPath = getLogoPath();
+const logoAlt = getLogoAlt();
 ---
 
 <html lang="en">
@@ -13,10 +17,21 @@ const { pageTitle } = Astro.props;
     <meta name="generator" content={Astro.generator} >
     <title>{pageTitle}</title>
   </head>
-<Header />
   <body>
+    <div class="site-header">
+      <div class="logo-container">
+        <a href="/" class="logo-link">
+          <img src={logoPath} alt={logoAlt} class="logo" />
+        </a>
+      </div>
+      <Header />
+    </div>
+    
+    <main class="main-content">
     <h1>{pageTitle}</h1>
     <slot />
+    </main>
+    
     <Footer />
 
   <script>

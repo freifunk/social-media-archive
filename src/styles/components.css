@@ -1,0 +1,110 @@
+/* Reusable Component Styles */
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0.75rem var(--spacing-lg);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.btn-primary:hover:not(.btn-disabled) {
+  background: #e9ecef;
+}
+
+.btn-secondary {
+  background: var(--color-bg-dark);
+  color: var(--color-text-inverse);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.btn-secondary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Card Styles */
+.card {
+  background: var(--color-bg-secondary);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.card-border {
+  border-bottom: 1px solid var(--color-border-light);
+  padding: var(--spacing-xl) 0;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Tag Styles */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.tag {
+  margin: var(--spacing-xs);
+  border: dotted 1px var(--color-border-dotted);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-large);
+  background-color: var(--color-bg-tertiary);
+}
+
+.tag a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+/* Stats Display */
+.stats {
+  display: flex;
+  gap: var(--spacing-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+}
+
+/* Meta Information */
+.meta {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-medium);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Content Styles */
+.content {
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Actions */
+.actions {
+  margin-top: var(--spacing-md);
+}
+
+.read-more {
+  color: var(--color-accent-hover);
+  text-decoration: none;
+  font-size: var(--font-size-medium);
+}
+
+/* Arrow Utilities */
+.arrow {
+  font-size: var(--font-size-xl);
+}

@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 const { frontmatter } = Astro.props;
 ---
 <BaseLayout pageTitle={frontmatter.title}>
-        <p>{frontmatter.pubDate.toLocaleDateString()}</p>
+        <p class="meta">{frontmatter.pubDate.toLocaleDateString()}</p>
         <p><em>{frontmatter.description}</em></p>
         <p>Written by {frontmatter.author}</p>
         <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
@@ -15,23 +15,3 @@ const { frontmatter } = Astro.props;
 
         <slot />
 </BaseLayout>
-
-<style>
-  a {
-    color: #00539F;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: .5em;
-    padding: .5em 1em;
-    font-size: 1.15em;
-    background-color: #F8FCFD;
-  }
-</style>
