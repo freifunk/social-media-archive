@@ -1,7 +1,7 @@
 /* CSS Custom Properties for Theming */
 :root {
   /* Colors */
-  --color-primary: #6B46C1;
+  --color-primary: #DF3A6C;
   --color-primary-hover: #553C9A;
   --color-secondary: #ff9776;
   --color-secondary-hover: #e6855a;
@@ -9,10 +9,10 @@
   --color-accent-hover: #0066cc;
   
   /* Text Colors */
-  --color-text-primary: #333;
-  --color-text-secondary: #666;
-  --color-text-muted: #888;
-  --color-text-inverse: #fff;
+  --color-text-primary: #DF3A6C;
+  --color-text-secondary: #DF3A6C;
+  --color-text-muted: #DF3A6C;
+  --color-text-inverse:#DF3A6C;
   
   /* Background Colors */
   --color-bg-primary: #f1f5f9;
