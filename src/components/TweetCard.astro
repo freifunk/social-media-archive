@@ -19,23 +19,23 @@ const { post, expanded = false } = Astro.props;
 const formattedDate = new Date(post.data.createdAt).toLocaleDateString();
 const tweetBody = expanded ? post.body : (post.body.length > 200 ? post.body.substring(0, 200) + '...' : post.body);
 ---
-<article class="tweet-card">
+<article class="card-border">
   <h3 class="tweet-title">
     <a href={`/tweets/${post.data.tweetID}/`} class="tweet-link">
       Tweet {post.data.tweetID}
     </a>
   </h3>
  
-  <div class="tweet-meta">
+  <div class="meta">
     <span>@{post.data.username}</span> •
     <span>Posted on {formattedDate}</span>
   </div>
  
-  <div class="tweet-content">
+  <div class="content">
     {tweetBody}
   </div>
  
-  <div class="tweet-stats">
+  <div class="stats">
     <span>❤️ {post.data.likeCount}</span>
     <span>🔄 {post.data.retweetCount}</span>
     <span>💬 {post.data.replyCount}</span>
@@ -43,7 +43,7 @@ const tweetBody = expanded ? post.body : (post.body.length > 200 ? post.body.sub
   </div>
  
   {!expanded && (
-    <div class="tweet-actions">
+    <div class="actions">
       <a href={`/tweets/${post.data.tweetID}/`} class="read-more">
         Read full tweet →
       </a>
@@ -51,41 +51,3 @@ const tweetBody = expanded ? post.body : (post.body.length > 200 ? post.body.sub
   )}
 </article>
 
-
-<style>
-  .tweet-card {
-    border-bottom: 1px solid #eee;
-    padding: 2rem 0;
-    margin-bottom: 1rem;
-  }
-  .tweet-title {
-    margin-top: 0;
-  }
-  .tweet-link {
-    color: #6B46C1;
-    text-decoration: underline;
-  }
-  .tweet-meta {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-  }
-  .tweet-content {
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-  .tweet-stats {
-    color: #666;
-    font-size: 0.8rem;
-    display: flex;
-    gap: 1rem;
-  }
-  .tweet-actions {
-    margin-top: 1rem;
-  }
-  .read-more {
-    color: #0066cc;
-    text-decoration: none;
-    font-size: 0.9rem;
-  }
-</style>

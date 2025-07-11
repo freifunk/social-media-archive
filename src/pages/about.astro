@@ -21,20 +21,18 @@ const fontWeight = "bold";
 const textCase = "uppercase";
 
 ---
-
-  <style is:global define:vars={{skillColor, fontWeight, textCase}}>
-      h1 {
-        color: purple;
-        font-size: 4rem;
-      }
-        .skill {
-      color: var(--skillColor);
-        font-weight: var(--fontWeight);
-        text-transform: var(--textCase);
+<style is:global define:vars={{skillColor, fontWeight, textCase}}>
+  .page-title {
+    color: purple;
+    font-size: var(--font-size-4xl);
+  }
+  .skill {
+    color: var(--skillColor);
+    font-weight: var(--fontWeight);
+    text-transform: var(--textCase);
     font-weight: bold;
-    }
- </style>  
-
+  }
+</style>
 
  <BaseLayout pageTitle={pageTitle} >
    <h2>... and my new Astro site!</h2>
