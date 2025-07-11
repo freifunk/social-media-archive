@@ -51,6 +51,10 @@
   --border-radius-md: 0.5em;
   --border-radius-lg: 8px;
   
+  /* Logo sizes */
+  --logo-height-desktop: 80px;
+  --logo-height-mobile: 60px;
+  
   /* Transitions */
   --transition-fast: 0.2s;
   --transition-medium: 0.25s;

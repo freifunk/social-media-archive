@@ -1,8 +1,12 @@
 ---
 import Header from '../components/header.astro';
 import Footer from '../components/footer.astro';
+import { getLogoPath, getLogoAlt } from '../config/site';
 import '../styles/global.css';
 const { pageTitle } = Astro.props;
+
+const logoPath = getLogoPath();
+const logoAlt = getLogoAlt();
 ---
 
 <html lang="en">
@@ -17,7 +21,7 @@ const { pageTitle } = Astro.props;
     <div class="site-header">
       <div class="logo-container">
         <a href="/" class="logo-link">
-          <img src="/logo_freifunknet.png" alt="Freifunk Logo" class="logo" />
+          <img src={logoPath} alt={logoAlt} class="logo" />
         </a>
       </div>
       <Header />

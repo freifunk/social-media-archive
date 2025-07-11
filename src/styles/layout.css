@@ -92,7 +92,7 @@
 }
 
 .logo {
-  height: 60px;
+  height: var(--logo-height-desktop);
   width: auto;
   transition: transform var(--transition-fast);
 }
@@ -109,7 +109,7 @@
 /* Responsive adjustments */
 @media screen and (max-width: 636px) {
   .logo {
-    height: 45px;
+    height: var(--logo-height-mobile);
   }
   
   .logo-container {
