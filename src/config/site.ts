@@ -24,7 +24,7 @@ export const siteConfig = {
   },
   
   // Site information
-  title: 'My Astro Site',
+  title: 'Freifunk Social Media Archive',
   description: 'A customizable Astro site',
   
   // Theme configuration (for future use)
