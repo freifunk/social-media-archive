@@ -9,10 +9,10 @@
   --color-accent-hover: #0066cc;
   
   /* Text Colors */
-  --color-text-primary: #DF3A6C
-  --color-text-secondary: #DF6C3A
-  --color-text-muted: #C4A1B4
-  --color-text-inverse: #1E1E1E
+  --color-text-primary: #DF3A6C;
+  --color-text-secondary: #DF6C3A;
+  --color-text-muted: #C4A1B4;
+  --color-text-inverse: #1E1E1E;
   
   /* Background Colors */
   --color-bg-primary: #f1f5f9;
