@@ -39,7 +39,7 @@ export const siteConfig = {
 export function getLogoPath(): string {
   // In a real implementation, you might want to check which files actually exist
   // For now, we'll return the first preferred option and let the browser handle fallbacks
-  return `/${siteConfig.logo.possibleNames[0]}`;
+  return `/${siteConfig.logo.possibleNames[5]}`;
 }
 
 // Helper function to get logo alt text
