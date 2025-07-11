@@ -1,4 +1,16 @@
 ---
 const { platform, username } = Astro.props;
+
+// Map platforms to Font Awesome icons
+const iconMap = {
+  twitter: 'fab fa-twitter',
+  github: 'fab fa-github', 
+  youtube: 'fab fa-youtube'
+};
+
+const iconClass = iconMap[platform] || 'fas fa-link';
 ---
-<a href={`https://www.${platform}.com/${username}`}>{platform}</a>
+<a href={`https://www.${platform}.com/${username}`}>
+  <i class={`${iconClass} fa-icon social ${platform}`}></i>
+  {platform}
+</a>

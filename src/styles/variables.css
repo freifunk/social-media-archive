@@ -58,8 +58,18 @@
   /* Transitions */
   --transition-fast: 0.2s;
   --transition-medium: 0.25s;
+  --transition-slow: 0.3s;
   
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  
+  /* Icon Colors */
+  --icon-heart: #e91e63;
+  --icon-retweet: #00bcd4;
+  --icon-comment: #2196f3;
+  --icon-quote: #9c27b0;
+  --icon-twitter: #1da1f2;
+  --icon-github: #333;
+  --icon-youtube: #ff0000;
 }

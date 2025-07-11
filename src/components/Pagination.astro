@@ -18,12 +18,12 @@ const { page } = Astro.props;
   <div class="pagination-button">
     {page.url.prev ? (
       <a href={page.url.prev} class="btn btn-primary">
-        <span class="arrow">←</span>
+        <i class="fas fa-arrow-left fa-icon arrow"></i>
         Previous
       </a>
     ) : (
       <span class="btn btn-primary btn-disabled">
-        <span class="arrow">←</span>
+        <i class="fas fa-arrow-left fa-icon arrow"></i>
         Previous
       </span>
     )}
@@ -37,12 +37,12 @@ const { page } = Astro.props;
     {page.url.next ? (
       <a href={page.url.next} class="btn btn-primary">
         Next
-        <span class="arrow">→</span>
+        <i class="fas fa-arrow-right fa-icon arrow"></i>
       </a>
     ) : (
       <span class="btn btn-primary btn-disabled">
         Next
-        <span class="arrow">→</span>
+        <i class="fas fa-arrow-right fa-icon arrow"></i>
       </span>
     )}
   </div>
