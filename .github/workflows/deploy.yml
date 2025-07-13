@@ -30,21 +30,7 @@ jobs:
         cd build
         pip install -r requirements.txt
         
-    - name: Download SQLite database via SSH
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.PRIVATE_SERVER_HOST }}
-        username: ${{ secrets.PRIVATE_SERVER_USER }}
-        key: ${{ secrets.PRIVATE_SERVER_SSH_KEY }}
-        port: ${{ secrets.PRIVATE_SERVER_PORT || 22 }}
-        script: |
-          # Verify database exists and is readable
-          if [ ! -f "${{ secrets.SQLITE_DB_PATH }}" ]; then
-            echo "Database file not found: ${{ secrets.SQLITE_DB_PATH }}"
-            exit 1
-          fi
-          
-    - name: Copy database to runner
+    - name: Download SQLite database from server
       run: |
         # Setup SSH client
         mkdir -p ~/.ssh
@@ -62,8 +48,7 @@ jobs:
           echo "Failed to download database file"
           exit 1
         fi
-        echo "Database downloaded successfully"
-        ls -la ./database.db
+
         
     - name: Extract tweets from SQLite
       run: |
