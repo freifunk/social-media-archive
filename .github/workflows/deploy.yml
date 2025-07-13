@@ -70,7 +70,7 @@ jobs:
         cd build
         python sqlite_extraction.py \
           --db-path ../database.db \
-          --table-name tweets \
+          --table-name tweet \
           --output-dir ../src/content/tweets
           
     - name: Install Node.js dependencies
