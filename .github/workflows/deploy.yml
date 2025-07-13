@@ -38,27 +38,38 @@ jobs:
         key: ${{ secrets.PRIVATE_SERVER_SSH_KEY }}
         port: ${{ secrets.PRIVATE_SERVER_PORT || 22 }}
         script: |
-          # Optional: Verify database exists and is readable
+          # Verify database exists and is readable
           if [ ! -f "${{ secrets.SQLITE_DB_PATH }}" ]; then
             echo "Database file not found: ${{ secrets.SQLITE_DB_PATH }}"
             exit 1
           fi
           
     - name: Copy database to runner
-      uses: appleboy/scp-action@v1.0.0
-      with:
-        host: ${{ secrets.PRIVATE_SERVER_HOST }}
-        username: ${{ secrets.PRIVATE_SERVER_USER }}
-        key: ${{ secrets.PRIVATE_SERVER_SSH_KEY }}
-        port: ${{ secrets.PRIVATE_SERVER_PORT || 22 }}
-        source: ${{ secrets.SQLITE_DB_PATH }}
-        target: ./
+      run: |
+        # Setup SSH client
+        mkdir -p ~/.ssh
+        echo "${{ secrets.PRIVATE_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.PRIVATE_SERVER_HOST }} >> ~/.ssh/known_hosts
+        
+        # Download database file
+        scp -P ${{ secrets.PRIVATE_SERVER_PORT || 22 }} \
+          ${{ secrets.PRIVATE_SERVER_USER }}@${{ secrets.PRIVATE_SERVER_HOST }}:${{ secrets.SQLITE_DB_PATH }} \
+          ./database.db
+          
+        # Verify downloaded file
+        if [ ! -f "./database.db" ]; then
+          echo "Failed to download database file"
+          exit 1
+        fi
+        echo "Database downloaded successfully"
+        ls -la ./database.db
         
     - name: Extract tweets from SQLite
       run: |
         cd build
         python sqlite_extraction.py \
-          --db-path ../ff-tweets.sqlite3 \
+          --db-path ../database.db \
           --table-name tweets \
           --output-dir ../src/content/tweets
           
