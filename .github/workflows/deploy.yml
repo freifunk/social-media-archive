@@ -1,0 +1,82 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install Python dependencies
+      run: |
+        cd build
+        pip install -r requirements.txt
+        
+    - name: Download SQLite database via SSH
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.PRIVATE_SERVER_HOST }}
+        username: ${{ secrets.PRIVATE_SERVER_USER }}
+        key: ${{ secrets.PRIVATE_SERVER_SSH_KEY }}
+        port: ${{ secrets.PRIVATE_SERVER_PORT || 22 }}
+        script: |
+          # Optional: Verify database exists and is readable
+          if [ ! -f "${{ secrets.SQLITE_DB_PATH }}" ]; then
+            echo "Database file not found: ${{ secrets.SQLITE_DB_PATH }}"
+            exit 1
+          fi
+          
+    - name: Copy database to runner
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.PRIVATE_SERVER_HOST }}
+        username: ${{ secrets.PRIVATE_SERVER_USER }}
+        key: ${{ secrets.PRIVATE_SERVER_SSH_KEY }}
+        port: ${{ secrets.PRIVATE_SERVER_PORT || 22 }}
+        source: ${{ secrets.SQLITE_DB_PATH }}
+        target: ./database.db
+        
+    - name: Extract tweets from SQLite
+      run: |
+        cd build
+        python sqlite_extraction.py \
+          --db-path ../database.db \
+          --table-name tweets \
+          --output-dir ../src/content/tweets
+          
+    - name: Install Node.js dependencies
+      run: npm ci
+      
+    - name: Build Astro site
+      run: npm run build
+      
+    - name: Deploy to server
+      if: github.ref == 'refs/heads/main'
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_SSH_KEY }}
+        port: ${{ secrets.DEPLOY_PORT || 22 }}
+        source: ./dist/*
+        target: ${{ secrets.DEPLOY_PATH }}
+        strip_components: 1
+        overwrite: true 
