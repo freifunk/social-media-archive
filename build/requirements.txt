@@ -1,5 +1,1 @@
-pyyaml
-sqlite3
-os
-yaml
-argparse
+PyYAML>=6.0
