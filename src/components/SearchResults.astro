@@ -2,12 +2,15 @@
 const { 
   resultsId = 'searchResults',
   readoutId = 'searchReadout',
+  paginationId = 'searchPagination',
   resultsClass = 'search-results',
-  readoutClass = 'search-readout'
+  readoutClass = 'search-readout',
+  paginationClass = 'search-pagination'
 } = Astro.props;
 ---
 
 <p id={readoutId} class={readoutClass}></p>
 <section aria-label="Search Results" class="search-results-section">
   <ul id={resultsId} class={resultsClass}></ul>
+  <div id={paginationId} class={paginationClass}></div>
 </section>

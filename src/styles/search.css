@@ -186,3 +186,23 @@
     transition: none;
   }
 }
+
+/* Search Pagination Styles */
+.search-pagination {
+  margin-top: var(--spacing-xl);
+}
+
+.search-pagination .pagination {
+  /* Inherits styles from components.css pagination */
+}
+
+.search-pagination .pagination-button button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.search-pagination .pagination-button button:hover:not(.btn-disabled) {
+  /* Inherits hover styles from btn classes */
+}

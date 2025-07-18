@@ -23,6 +23,15 @@ export interface SearchResult {
   score: number;
 }
 
+export interface PaginatedResults {
+  results: SearchResult[];
+  totalResults: number;
+  currentPage: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
 export class SearchManager {
   private searchData: SearchItem[] | null = null;
   private fuseInstance: Fuse<SearchItem> | null = null;
@@ -91,11 +100,18 @@ export class SearchManager {
   /**
    * Performs the search operation
    */
-  async search(searchTerm: string): Promise<SearchResult[]> {
+  async search(searchTerm: string, page: number = 1): Promise<PaginatedResults> {
     const sanitizedTerm = this.sanitizeInput(searchTerm);
     
     if (!this.isValidSearchTerm(sanitizedTerm)) {
-      return [];
+      return {
+        results: [],
+        totalResults: 0,
+        currentPage: page,
+        totalPages: 0,
+        hasNextPage: false,
+        hasPrevPage: false
+      };
     }
 
     await this.initializeFuse();
@@ -105,10 +121,24 @@ export class SearchManager {
     }
 
     console.log(`Searching for: "${sanitizedTerm}"`);
-    const results = this.fuseInstance.search(sanitizedTerm);
-    console.log('Search results:', results);
+    const allResults = this.fuseInstance.search(sanitizedTerm);
+    console.log('Total search results:', allResults.length);
     
-    return results;
+    // Calculate pagination
+    const totalResults = allResults.length;
+    const totalPages = Math.ceil(totalResults / searchConfig.resultsPerPage);
+    const startIndex = (page - 1) * searchConfig.resultsPerPage;
+    const endIndex = startIndex + searchConfig.resultsPerPage;
+    const results = allResults.slice(startIndex, endIndex);
+    
+    return {
+      results,
+      totalResults,
+      currentPage: page,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1
+    };
   }
 }
 
@@ -141,18 +171,30 @@ export function extractItemData(item: SearchItem) {
  * URL management utilities
  */
 export class URLManager {
-  static updateSearchURL(searchTerm: string): void {
+  static updateSearchURL(searchTerm: string, page: number = 1): void {
     const url = new URL(window.location.href);
     if (searchTerm) {
       url.searchParams.set('q', searchTerm);
+      if (page > 1) {
+        url.searchParams.set('page', page.toString());
+      } else {
+        url.searchParams.delete('page');
+      }
     } else {
       url.searchParams.delete('q');
+      url.searchParams.delete('page');
     }
     window.history.replaceState({}, '', url.toString());
   }
 
   static getSearchTermFromURL(): string {
     return new URLSearchParams(window.location.search).get('q') || '';
+  }
+
+  static getPageFromURL(): number {
+    const pageParam = new URLSearchParams(window.location.search).get('page');
+    const page = pageParam ? parseInt(pageParam, 10) : 1;
+    return isNaN(page) || page < 1 ? 1 : page;
   }
 
   static updateDocumentTitle(searchTerm: string): void {

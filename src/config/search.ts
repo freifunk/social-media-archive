@@ -1,7 +1,7 @@
 // Search configuration
 export const searchConfig = {
   // Search behavior settings
-  resultsPerPage: 10,
+  resultsPerPage: 5,
   minSearchLength: 2,
   maxSearchLength: 100,
   
