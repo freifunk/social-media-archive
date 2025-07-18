@@ -19,16 +19,9 @@ const logoAlt = getLogoAlt();
     <title>{pageTitle}</title>
   </head>
   <body>
-    <div class="site-header">
-      <div class="logo-container">
-        <a href="/" class="logo-link">
-          <img src={logoPath} alt={logoAlt} class="logo" />
-        </a>
-      </div>
-      <Header />
-    </div>
+    <Header />
     
-    <main class="main-content">
+    <main>
     <h1>{pageTitle}</h1>
     <slot />
     </main>
