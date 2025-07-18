@@ -4,6 +4,7 @@
 @import './layout.css';
 @import './components.css';
 @import './navigation.css';
+@import './search.css';
 
 /* Base Styles */
 html {
@@ -25,21 +26,4 @@ body {
 
 * {
   box-sizing: border-box;
-}
-
-.form {
-  display: grid;
-  gap: 1rem;
-  max-width: 32ch;
-  border: 2px solid var(--color-text-primary);
-  border-radius: 0.5rem;
-  padding: 1rem;
-}
-.form label{
-  font-weight: bold;
-  font-size: 2rem;
-}
-
-input{
-  font: inherit
 }

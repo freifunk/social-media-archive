@@ -1,0 +1,13 @@
+---
+const { 
+  resultsId = 'searchResults',
+  readoutId = 'searchReadout',
+  resultsClass = 'search-results',
+  readoutClass = 'search-readout'
+} = Astro.props;
+---
+
+<p id={readoutId} class={readoutClass}></p>
+<section aria-label="Search Results" class="search-results-section">
+  <ul id={resultsId} class={resultsClass}></ul>
+</section>
