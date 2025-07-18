@@ -1,10 +1,31 @@
 ---
-import Hamburger from './hamburger.astro';
-import Navigation from './navigation.astro';
+import { getLogoPath, getLogoAlt } from '../config/site';
+
+const logoPath = getLogoPath();
+const logoAlt = getLogoAlt();
 ---
-<header class="main-header">
-  <nav>
-    <Hamburger />
-    <Navigation />
+<header class="site-header">
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <img src={logoPath} alt={logoAlt} class="logo" />
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">SEARCH</a>
+        <a href="/tweets/" class="nav-link">TWEETS</a>
+        <a href="/about/" class="nav-link">ABOUT</a>
+        <a href="/tags/" class="nav-link">TAGS</a>
+      </div>
+      <div class="hamburger">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="/" class="mobile-nav-link">SEARCH</a>
+      <a href="/tweets/" class="mobile-nav-link">TWEETS</a>
+      <a href="/about/" class="mobile-nav-link">ABOUT</a>
+      <a href="/tags/" class="mobile-nav-link">TAGS</a>
+    </div>
   </nav>
-</header>
