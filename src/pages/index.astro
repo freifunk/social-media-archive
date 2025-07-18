@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const pageTitle = "Home Page";
+import SearchWidget from '../components/searchWidget.astro';
 ---
+
+
 <BaseLayout pageTitle={pageTitle} >
+    <SearchWidget />
 </BaseLayout>

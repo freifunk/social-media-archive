@@ -9,6 +9,7 @@
 html {
   background-color: var(--color-bg-primary);
   font-family: var(--font-family-base);
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -17,8 +18,28 @@ body {
   max-width: var(--container-max-width);
   padding: var(--spacing-md);
   line-height: var(--line-height-base);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+  max-width: 32ch;
+  border: 2px solid var(--color-text-primary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.form label{
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+input{
+  font: inherit
 }
