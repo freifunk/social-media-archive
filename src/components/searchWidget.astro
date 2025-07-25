@@ -1,0 +1,60 @@
+---
+import SearchForm from './SearchForm.astro';
+---
+
+<SearchForm formClass="search-widget" inputId="searchWidget" />
+
+<script>
+    import DOMPurify from 'dompurify';
+    
+    const searchWidget = document.querySelector('#searchWidget') as HTMLInputElement | null;
+    
+    searchWidget?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            
+            const searchTerm = DOMPurify.sanitize(searchWidget.value);
+            console.log("Search term:", searchTerm);
+            
+            if (!searchTerm || searchTerm.length === 0) return;
+            
+            const url = new URL("/search", window.location.origin);
+            url.searchParams.set("q", searchTerm);
+            window.location.assign(url.toString());
+        }
+    });
+    
+    // Also handle form submission if wrapped in a form
+    const form = searchWidget?.closest('form');
+    form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        if (!searchWidget) return;
+        
+        const searchTerm = DOMPurify.sanitize(searchWidget.value);
+        console.log("Search term:", searchTerm);
+        
+        if (!searchTerm || searchTerm.length === 0) return;
+        
+        const url = new URL("/search", window.location.origin);
+        url.searchParams.set("q", searchTerm);
+        window.location.assign(url.toString());
+    });
+</script>
+
+<style>
+    .search-widget {
+        max-width: 100%;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .search-widget .search-label {
+        font-size: var(--font-size-2xl);
+    }
+    
+    @media screen and (max-width: 768px) {
+        .search-widget .search-label {
+            font-size: var(--font-size-xl);
+        }
+    }
+</style>

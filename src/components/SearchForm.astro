@@ -1,0 +1,28 @@
+---
+import { searchConfig } from '../config/search';
+
+const { 
+  searchLabel = searchConfig.text.searchLabel,
+  searchPlaceholder = searchConfig.text.searchPlaceholder,
+  searchDescription = searchConfig.text.searchDescription,
+  inputId = 'search',
+  formClass = 'search-form'
+} = Astro.props;
+---
+
+<aside class={formClass}>
+  <div class="search-form-header">
+    <label for={inputId} class="search-label">{searchLabel}</label>
+    <span class="search-description">{searchDescription}</span>
+  </div>
+  <input 
+    type="search" 
+    required 
+    min={searchConfig.minSearchLength}
+    max={searchConfig.maxSearchLength}
+    name="search" 
+    id={inputId}
+    class="search-input"
+    placeholder={searchPlaceholder} 
+  />
+</aside>

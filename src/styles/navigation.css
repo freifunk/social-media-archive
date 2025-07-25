@@ -1,96 +1,155 @@
 /* Navigation Styles */
 
-/* Main Header */
-.main-header {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
+/* Site Header */
+.site-header {
+  width: 100%;
+  background-color: var(--color-bg-secondary);
+  border-bottom: 2px solid var(--color-primary);
+  margin-bottom: var(--spacing-xl);
 }
 
-.main-header nav {
+.main-nav {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+.nav-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-xl);
+  position: relative;
+}
+
+/* Logo */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.nav-logo .logo {
+  height: var(--logo-height-desktop);
+  width: auto;
+  transition: transform var(--transition-fast);
+}
+
+.nav-logo:hover .logo {
+  transform: scale(1.05);
+}
+
+/* Desktop Navigation Links */
+.nav-links {
+  display: flex;
+  gap: var(--spacing-xl);
   align-items: center;
 }
 
-/* Hamburger Menu */
+.nav-link {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: var(--font-size-large);
+  color: var(--color-text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nav-link:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  transform: translateY(-2px);
+}
+
+/* Mobile Hamburger Menu */
 .hamburger {
-  padding-right: 20px;
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
+  padding: var(--spacing-sm);
 }
 
 .hamburger .line {
   display: block;
-  width: 40px;
-  height: 5px;
-  margin-bottom: 10px;
-  background-color: var(--color-secondary);
+  width: 30px;
+  height: 3px;
+  margin-bottom: 6px;
+  background-color: var(--color-primary);
+  transition: all var(--transition-fast);
+  border-radius: 2px;
 }
 
-/* Navigation Links */
-.nav-links {
-  width: 100%;
-  top: 5rem;
-  right: 0;
-  background-color: var(--color-secondary);
+.hamburger .line:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile Navigation Links */
+.mobile-nav-links {
   display: none;
-  margin: 0;
-  position: absolute;
-  z-index: 999;
+  width: 100%;
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border-light);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
-.nav-links a {
+.mobile-nav-link {
   display: block;
   text-align: center;
-  padding: 10px 0;
+  padding: var(--spacing-md);
   text-decoration: none;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-large);
   font-weight: bold;
   text-transform: uppercase;
   color: var(--color-text-primary);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
 }
 
-.nav-links a:hover,
-.nav-links a:focus {
-  background-color: var(--color-secondary-hover);
+.mobile-nav-link:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
 }
 
+/* Mobile Navigation Active State */
 .expanded {
-  display: unset;
+  display: flex;
 }
 
-/* Desktop Navigation */
-@media screen and (min-width: 636px) {
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .nav-container {
+    gap: var(--spacing-md);
+  }
+  
   .nav-links {
-    margin-right: 0;
-    display: block;
-    position: static;
-    width: auto;
-    background: none;
-    z-index: auto;
-  }
-
-  .nav-links a {
-    display: inline-block;
-    padding: 15px 20px;
-  }
-
-  .hamburger {
     display: none;
   }
   
-  .main-header {
-    margin-top: var(--spacing-md);
+  .hamburger {
+    display: block;
+  }
+  
+  .nav-logo .logo {
+    height: var(--logo-height-mobile);
   }
 }
 
-/* Mobile adjustments for logo space */
-@media screen and (max-width: 636px) {
-  .nav-links {
-    top: 4rem;
-    right: var(--spacing-sm);
-    left: auto;
-    width: 200px;
+@media screen and (max-width: 480px) {
+  .nav-container {
+    gap: var(--spacing-sm);
+  }
+  
+  .main-nav {
+    padding: var(--spacing-sm);
   }
 }
 

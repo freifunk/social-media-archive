@@ -4,11 +4,13 @@
 @import './layout.css';
 @import './components.css';
 @import './navigation.css';
+@import './search.css';
 
 /* Base Styles */
 html {
   background-color: var(--color-bg-primary);
   font-family: var(--font-family-base);
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -17,6 +19,9 @@ body {
   max-width: var(--container-max-width);
   padding: var(--spacing-md);
   line-height: var(--line-height-base);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 * {
