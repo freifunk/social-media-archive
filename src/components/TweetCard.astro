@@ -22,12 +22,12 @@ const tweetBody = expanded ? post.body : (post.body.length > 200 ? post.body.sub
 <article class="card-border">
   <h3 class="tweet-title">
     <a href={`/tweets/${post.data.tweetID}/`} class="tweet-link">
-      Tweet {post.data.tweetID}
+      @{post.data.username}
     </a>
   </h3>
  
   <div class="meta">
-    <span>@{post.data.username}</span> •
+
     <span>Posted on {formattedDate}</span>
   </div>
  

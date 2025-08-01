@@ -1,0 +1,26 @@
+[
+  {
+    "original_url": "https://t.co/knVzQ92haM",
+    "status": "SUCCESS",
+    "resolved_url": "https://wiki.freifunk.net/33c3/Timetable#Timetable",
+    "timestamp": "2025-07-25T07:14:30.965987"
+  },
+  {
+    "original_url": "https://t.co/example123",
+    "status": "FAILED",
+    "resolved_url": "URL not resolved or invalid link",
+    "timestamp": "2025-07-25T07:14:31.111062"
+  },
+  {
+    "original_url": "https://t.co/abc123def",
+    "status": "FAILED",
+    "resolved_url": "URL not resolved or invalid link",
+    "timestamp": "2025-07-25T07:14:31.253593"
+  },
+  {
+    "original_url": "https://t.co/xyz789",
+    "status": "FAILED",
+    "resolved_url": "URL not resolved or invalid link",
+    "timestamp": "2025-07-25T07:14:31.375839"
+  }
+]
