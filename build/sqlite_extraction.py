@@ -2,6 +2,7 @@ import sqlite3
 import os
 import yaml
 import argparse
+from url_extraction_sql import find_and_resolve_tco_urls
 
 def export_sqlite_to_markdown(db_path, table_name, output_dir):
     
@@ -31,6 +32,8 @@ def export_sqlite_to_markdown(db_path, table_name, output_dir):
 
         # Extract tweet text as body
         body_text = data.pop("text", "").strip()
+
+        find_and_resolve_tco_urls(body_text, db_file='resolved_urls.db')
 
         # Use tweetID or fallback to id as filename
         filename = f"{data.get('tweetID') or data.get('id')}.md"
