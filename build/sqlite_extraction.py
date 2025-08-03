@@ -2,9 +2,30 @@ import sqlite3
 import os
 import yaml
 import argparse
-from url_extraction_sql import find_and_resolve_tco_urls
+from change_urls import text_url_replace
 
-def export_sqlite_to_markdown(db_path, table_name, output_dir):
+"""
+Author: Sandra 
+Date: 2025-08-03
+Purpose: This script extracts exported twitter data from an SQLite database
+and converts each entry to a markdown file. The script assums there is a "text", "tweetID"
+and "id" column of data in the tweet db. It also assumes there is a "resolved_urls" table
+in the url db. "https://t.co/xxx.. URLs in the bodytext are replaced with their resolved URLs 
+and formatted into markdown link format.
+ """
+
+def export_sqlite_to_markdown(db_path, tweet_db, url_db, output_dir):
+    """Export data from SQLite database to markdown files.
+    Args:
+        db_path (str): Path to the SQLite database file.
+        tweet_db (str): Name of the table to extract tweet data from.
+        url_db (str): Name of the table containing resolved URLs.
+        output_dir (str): Directory to save the exported markdown files.
+    Returns:
+        None
+    Output:
+        Creates markdown files in the specified output directory, each containing the data from one row.
+    """
     
     # make output directory if needed
     os.makedirs(output_dir, exist_ok=True)
@@ -18,11 +39,11 @@ def export_sqlite_to_markdown(db_path, table_name, output_dir):
     conn.row_factory = sqlite3.Row  # access columns by name
     cursor = conn.cursor()
 
-    cursor.execute(f"SELECT * FROM {table_name};")
+    cursor.execute(f"SELECT * FROM {tweet_db};")
     rows = cursor.fetchall()
 
     if not rows:
-        print(f"No data found in table '{table_name}'.")
+        print(f"No data found in table '{tweet_db}'.")
         conn.close()
         return
 
@@ -33,7 +54,7 @@ def export_sqlite_to_markdown(db_path, table_name, output_dir):
         # Extract tweet text as body
         body_text = data.pop("text", "").strip()
 
-        find_and_resolve_tco_urls(body_text, db_file='resolved_urls.db')
+        body_text = text_url_replace(url_db, "resolved_urls", body_text)
 
         # Use tweetID or fallback to id as filename
         filename = f"{data.get('tweetID') or data.get('id')}.md"
@@ -55,9 +76,9 @@ def export_sqlite_to_markdown(db_path, table_name, output_dir):
     print(f"Exported {len(rows)} markdown files to: {output_dir}")
 
 
-def main():
+if __name__ == "__main__":
     """Main function to handle command line arguments and execute the cleaning process."""
-
+    
     parser = argparse.ArgumentParser(
         description="Data extraction to markdown from SQLite database",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -74,11 +95,19 @@ def main():
         help="Path to the SQLite database file."
     )
     parser.add_argument(
-        "--table-name",
+        "--tweet-db",
         type=str,
         required=True,
-        help="Name of the table to extract data from."
+        help="Name of the table to extract tweet data from."
     )
+
+    parser.add_argument(
+        "--url-db",
+        type=str,
+        required=True,
+        help="Name of the table containing resolved URLs."
+    )
+
     parser.add_argument(
         "--output-dir",
         type=str,
@@ -88,8 +117,4 @@ def main():
 
     args = parser.parse_args()
 
-    export_sqlite_to_markdown(args.db_path, args.table_name, args.output_dir)
-
-
-if __name__ == "__main__":
-    main()
+    export_sqlite_to_markdown(args.db_path, args.tweet_db, args.url_db, args.output_dir)
