@@ -1,7 +1,15 @@
 import sqlite3
 import re
 
-# Step 1: Load resolved URL mappings into a dict
+
+"""
+Author: Sandra 
+Date: 2025-08-03
+Purpose: This script looks for t.co links in a body text, replaces them with their resolved 
+URLs if they exist in the SQLite database, and formats them into markdown link format.
+The script assumes the database has a table with columns "original_url" and "resolved_url".
+ """
+
 def load_url_map(db_path, db_table_name):
 
     conn = sqlite3.connect(db_path)
@@ -19,24 +27,33 @@ def load_url_map(db_path, db_table_name):
 
 def replace_links(body_text, url_map):
     pattern = r"https://t\.co/\S+"
-    # re.sub works like re.sub(regex_pattern to look for, the thing you want to replace with, the original string you are looking to replace)
-    return re.sub(pattern, lambda m: url_map.get(m.group(), m.group()), body_text)
+    
+    def replacer(match):
+        short_url = match.group()
+        resolved_url = url_map.get(short_url, short_url)
+        return f"[{resolved_url}]({resolved_url})"  # Markdown format: [text](url)
 
-def main_replace(db_path, db_table_nam, body_text):
+    return re.sub(pattern, replacer, body_text)
+
+
+def text_url_replace(db_path, db_table_name, body_text):
+
     url_map = load_url_map(db_path, db_table_name)
     new_body = replace_links(body_text, url_map)
     return new_body
 
 if __name__ == "__main__":
-    # Usage
-    # program assumed columbs "original_url" and "resolved_url"  are in db_table_name
+    # Example test case
+
+    # program assumed columns "original_url" and "resolved_url"  are in db_table_name
+
     db_path = "resolved_urls.db"
     db_table_name = "resolved_urls"
-    print("---------------")
     body_text = "Check this out https://t.co/knVzQ92haM and also https://t.co/xyz456"
-    print("Before changes: ", body_text)
+
+    print("Before: ", body_text)
     print("---------------")
-    new_body = main_replace(db_path, db_table_name, body_text)
-    print("After changes: ", new_body)
+    new_body = text_url_replace(db_path, db_table_name, body_text)
+    print("After: ", new_body)
     print("---------------")
 
