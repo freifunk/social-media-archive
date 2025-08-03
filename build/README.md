@@ -29,7 +29,7 @@ The project extracts and resolves short Twitter links (e.g. `https://t.co/...`) 
 
 
 ┌────────────────────┐
-│ sqlite_extraction.py│     ←  build time
+│ sqlite_extraction.py│     ←  build time, imports change_url.py
 └─────────┬──────────┘
           │             
           ▼
@@ -37,7 +37,8 @@ The project extracts and resolves short Twitter links (e.g. `https://t.co/...`) 
 │  resolved_urls.db  │ ◄────────────┐
 └─────────┬──────────┘              │
           │                         │
-          ▼                         │
+          ▼                         │   ←  change_url.py uses db
+                                    │      
  Read body_text from SQLite         │
           │                         │
           ▼                         │
