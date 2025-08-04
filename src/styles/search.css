@@ -115,7 +115,7 @@
 .search-result-date {
   display: block;
   font-size: var(--font-size-small);
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   margin-bottom: var(--spacing-xs);
 }
 

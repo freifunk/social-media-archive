@@ -30,11 +30,6 @@ function transformTweetsForSearch(tweets) {
 async function getSearchData() {
   try {
     const allTweets = await getCollection("tweets");
-    console.log("Fetched tweets for search:", allTweets.length);
-    
-    if (allTweets.length > 0) {
-      console.log("Sample tweet structure:", allTweets[0]);
-    }
     
     return transformTweetsForSearch(allTweets);
   } catch (error) {

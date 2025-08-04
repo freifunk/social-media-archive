@@ -6,3 +6,4 @@ data/
 .env
 .vscode/
 build/resolved_urls.db
+src/build/data.sqlite3

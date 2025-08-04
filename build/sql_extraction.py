@@ -7,27 +7,24 @@ import time
 from datetime import datetime
 
 """
-Author: Sandra 
+Author: Sandra Taskovic
 Date: 2025-08-03
-Sourcre: Cluade AI took my previous scripts and re-structured into a class to imporve performance, added error handling and timer.
+Source: Claude AI took my previous scripts and re-structured into a class to improve performance, added error handling and timer.
 Purpose: This script extracts exported twitter data from an SQLite database
 and converts each entry to a markdown file. It replaces t.co URLs with their resolved 
-URLs from a resolved_urls table and formats them into markdown link format.
+URLs from a resolved_urls table in the same database and formats them into markdown link format.
 The script assumes there is a "text", "tweetID" and "id" column in the tweet db,
 and "original_url", "resolved_url", "status" columns in the resolved_urls table.
 """
 
 class TwitterToMarkdownExporter:
-    def __init__(self, db_path, url_db_path=None):
-        """Initialize the exporter with database paths.
+    def __init__(self, db_path):
+        """Initialize the exporter with database path.
         
         Args:
-            db_path (str): Path to the SQLite database file containing tweets
-            url_db_path (str): Path to the SQLite database file containing resolved URLs.
-                              If None, assumes URLs are in the same database as tweets.
+            db_path (str): Path to the SQLite database file containing both tweets and resolved URLs
         """
         self.db_path = db_path
-        self.url_db_path = url_db_path or db_path
         self.url_map = {}
         self.stats = {
             'total_tweets': 0,
@@ -48,8 +45,19 @@ class TwitterToMarkdownExporter:
         print("Loading URL mappings from database...")
         
         try:
-            conn = sqlite3.connect(self.url_db_path)
+            conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
+            
+            # Check if the resolved_urls table exists
+            cursor.execute("""
+                SELECT name FROM sqlite_master 
+                WHERE type='table' AND name=?
+            """, (url_table,))
+            
+            if not cursor.fetchone():
+                print(f"Warning: Table '{url_table}' not found. URLs will not be resolved.")
+                conn.close()
+                return {}
             
             # Only load successful URL resolutions
             cursor.execute(f"""
@@ -142,7 +150,7 @@ class TwitterToMarkdownExporter:
         # Load URL mappings once
         self.load_url_map(url_table)
         
-        # Connect to tweet database
+        # Connect to database
         try:
             conn = sqlite3.connect(self.db_path)
             conn.row_factory = sqlite3.Row
@@ -251,11 +259,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # URLs in same database as tweets
-  python sql_extraction.py --db-path tweets.db --tweet-table tweets --output-dir ./markdown_output
+  # Basic usage with resolved URLs in same database
+  python sql_extraction.py --db-path data.sqlite3 --tweet-table tweet --output-dir ./src/content/tweets
   
-  # URLs in separate database
-  python sql_extraction.py --db-path tweets.db --tweet-table tweets --url-db-path resolved_urls.db --output-dir ./markdown_output
+  # Custom URL table name
+  python sql_extraction.py --db-path data.sqlite3 --tweet-table tweet --url-table my_resolved_urls --output-dir ./markdown_output
         """
     )
     
@@ -263,7 +271,7 @@ Examples:
         "--db-path",
         type=str,
         required=True,
-        help="Path to the SQLite database file containing tweets"
+        help="Path to the SQLite database file containing both tweets and resolved URLs"
     )
     
     parser.add_argument(
@@ -271,12 +279,6 @@ Examples:
         type=str,
         required=True,
         help="Name of the table containing tweet data"
-    )
-    
-    parser.add_argument(
-        "--url-db-path",
-        type=str,
-        help="Path to SQLite database containing resolved URLs (optional, defaults to same as --db-path)"
     )
     
     parser.add_argument(
@@ -296,7 +298,7 @@ Examples:
     args = parser.parse_args()
     
     # Create exporter and run
-    exporter = TwitterToMarkdownExporter(args.db_path, args.url_db_path)
+    exporter = TwitterToMarkdownExporter(args.db_path)
     exporter.export_to_markdown(args.tweet_table, args.output_dir, args.url_table)
 
 
