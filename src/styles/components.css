@@ -91,6 +91,19 @@
 .content {
   margin-bottom: var(--spacing-md);
   line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+}
+
+.content p {
+  color: var(--color-text-primary);
+}
+
+.content a {
+  color: var(--color-accent);
+}
+
+.content a:hover {
+  color: var(--color-accent-hover);
 }
 
 /* Actions */
