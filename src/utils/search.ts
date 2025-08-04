@@ -1,7 +1,6 @@
 // Search utility functions
 import DOMPurify from 'dompurify';
 import Fuse from 'fuse.js';
-import { marked } from 'marked';
 import { searchConfig } from '../config/search';
 
 export interface SearchItem {
