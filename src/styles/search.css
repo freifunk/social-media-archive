@@ -137,17 +137,21 @@
 
 .search-result-text {
   line-height: var(--line-height-relaxed);
-  color: var(--color-text-primary);
+  color: #1E1E1E !important;
   margin: 0;
 }
 
+.search-result-text * {
+  color: #1E1E1E !important;
+}
+
 .search-result-text a {
-  color: var(--color-accent);
+  color: var(--color-accent) !important;
   text-decoration: none;
 }
 
 .search-result-text a:hover {
-  color: var(--color-accent-hover);
+  color: var(--color-accent-hover) !important;
   text-decoration: underline;
 }
 
