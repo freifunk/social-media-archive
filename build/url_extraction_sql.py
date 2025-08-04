@@ -7,7 +7,7 @@ from datetime import datetime
 Author: Sandra 
 Date: 2025-08-03
 Purpose: This script finds and resolves t.co URLs in a given string text to their original links,
-then saving the results to an SQLite database. The results are also printed in the terminal.
+then save the results to an SQLite database. The results are also printed in the terminal.
  """
 
 def resolve_tco_url(tco_url):
