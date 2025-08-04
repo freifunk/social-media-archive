@@ -6,3 +6,4 @@ data/
 .env
 .vscode/
 .dist/
+build/resolved_urls.db

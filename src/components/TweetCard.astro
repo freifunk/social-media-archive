@@ -1,5 +1,7 @@
 ---
 // components/TweetCard.astro
+import { marked } from 'marked';
+
 export interface Props {
   post: {
     data: {
@@ -15,33 +17,48 @@ export interface Props {
   };
   expanded?: boolean;
 }
+
 const { post, expanded = false } = Astro.props;
 const formattedDate = new Date(post.data.createdAt).toLocaleDateString();
-const tweetBody = expanded ? post.body : (post.body.length > 200 ? post.body.substring(0, 200) + '...' : post.body);
+
+// Always parse full markdown
+const fullHTML = await marked.parse(post.body);
+
+// Basic HTML-safe truncation without breaking tags
+function truncate(html: string, maxLength: number): string {
+  if (html.length <= maxLength) return html;
+
+  const end = html.lastIndexOf(' ', maxLength); // avoid cutting in the middle of a word or tag
+  return html.slice(0, end > 0 ? end : maxLength) + '...';
+}
+
+const tweetBody = expanded ? fullHTML : truncate(fullHTML, 300); // increase limit slightly to allow full tags
 ---
+
 <article class="card-border">
   <h3 class="tweet-title">
     <a href={`/tweets/${post.data.tweetID}/`} class="tweet-link">
       @{post.data.username}
     </a>
   </h3>
- 
-  <div class="meta">
 
+  <div class="meta">
     <span>Posted on {formattedDate}</span>
   </div>
- 
+
   <div class="content">
-    {tweetBody}
+    <Fragment set:html={tweetBody} />
   </div>
- 
+
   <div class="stats">
     <span><i class="fas fa-heart fa-icon heart"></i> {post.data.likeCount}</span>
     <span><i class="fas fa-retweet fa-icon retweet"></i> {post.data.retweetCount}</span>
     <span><i class="fas fa-comment fa-icon comment"></i> {post.data.replyCount}</span>
-    {post.data.quoteCount > 0 && <span><i class="fas fa-quote-left fa-icon quote"></i> {post.data.quoteCount}</span>}
+    {post.data.quoteCount > 0 && (
+      <span><i class="fas fa-quote-left fa-icon quote"></i> {post.data.quoteCount}</span>
+    )}
   </div>
- 
+
   {!expanded && (
     <div class="actions">
       <a href={`/tweets/${post.data.tweetID}/`} class="read-more">
@@ -50,4 +67,3 @@ const tweetBody = expanded ? post.body : (post.body.length > 200 ? post.body.sub
     </div>
   )}
 </article>
-
