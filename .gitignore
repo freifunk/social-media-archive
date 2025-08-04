@@ -5,3 +5,4 @@ src/content/tweets/
 data/
 .env
 .vscode/
+build/resolved_urls.db
