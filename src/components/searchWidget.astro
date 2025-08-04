@@ -2,7 +2,22 @@
 import SearchForm from './SearchForm.astro';
 ---
 
-<SearchForm formClass="search-widget" inputId="searchWidget" />
+<aside class="search-widget">
+  <div class="search-form-header">
+    <label for="searchWidget" class="search-label">Search Tweets</label>
+    <span class="search-description">Enter a search term or phrase to search tweets</span>
+  </div>
+  <input 
+    type="search" 
+    required 
+    min="2"
+    max="100"
+    name="search" 
+    id="searchWidget"
+    class="search-input"
+    placeholder="Search tweets..." 
+  />
+</aside>
 
 <script>
     import DOMPurify from 'dompurify';
@@ -41,20 +56,3 @@ import SearchForm from './SearchForm.astro';
         window.location.assign(url.toString());
     });
 </script>
-
-<style>
-    .search-widget {
-        max-width: 100%;
-        margin-bottom: var(--spacing-lg);
-    }
-    
-    .search-widget .search-label {
-        font-size: var(--font-size-2xl);
-    }
-    
-    @media screen and (max-width: 768px) {
-        .search-widget .search-label {
-            font-size: var(--font-size-xl);
-        }
-    }
-</style>
