@@ -1,18 +1,19 @@
 
 # 🐦 Twitter Data Preprocessing Workflow
 
-This ReadME explains how the pre-build and build scripts
-run to prepare the twitter data.
+This README explains how the pre-build and build scripts
+should run to prepare the twitter data for the Social Media Archive.
 
-The project extracts and resolves short Twitter links (e.g. `https://t.co/...`) from a SQLite database and prepares Markdown files with clean, readable URLs.
+The project extracts and resolves short Twitter links (e.g. `https://t.co/...`) from a SQLite database and prepares Markdown files with their resolved URLs formatted as links.
 
 ---
 
 ## 🛠️ Workflow Overview
 
 ```text
+
 ┌────────────────────────────┐
-│ url_extraction_sql.py      │  ← Pre-build
+│ run url_extraction_sql.py  │     ← Pre-build 
 └─────────────┬──────────────┘
               │
               ▼
@@ -24,30 +25,31 @@ The project extracts and resolves short Twitter links (e.g. `https://t.co/...`) 
               │
               ▼
 ┌────────────────────────────┐
-│ Store in resolved_urls.db  │
+│ Stores in resolved_urls.db │
 └────────────────────────────┘
 
 
-┌────────────────────┐
-│ sqlite_extraction.py│     ←  build time, imports change_url.py
-└─────────┬──────────┘
-          │             
-          ▼
-┌────────────────────┐
-│  resolved_urls.db  │ ◄────────────┐
-└─────────┬──────────┘              │
-          │                         │
-          ▼                         │   ←  change_url.py uses db
-                                    │      
- Read body_text from SQLite         │
-          │                         │
-          ▼                         │
- Run text_url_replace() ────────────┘
- (uses resolved_urls.db)
-          │
-          ▼
-┌────────────────────┐
-│ Output .md files   │
-└────────────────────┘
+
+
+┌────────────────────────────┐
+│ run sqlite_extraction.py   │     ←  build time, imports and calls change_url.py
+└─────────────┬──────────────┘
+              │             
+              ▼
+     Read body text from SQLite     ◄────────────┐       
+              │                                  │     ←  change_url.py uses resolved_urls.db
+              ▼                                  │
+     Run text_url_replace()                      │
+(replace old link with resolved link)            │
+              │                                  │
+              ▼                                  │
+┌────────────────────────────┐                   │
+│  resolved_urls.db          │     ──────────────┘
+└─────────────┬──────────────┘              
+              │                             
+              ▼    
+┌──────────────────────────┐
+│ Output .md files         │        ←  final md files stored to /src/content/tweets
+└──────────────────────────┘
 
 
