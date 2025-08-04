@@ -1,9 +1,8 @@
-
 # Twitter Data Preprocessing Workflow
 
 This README explains how the pre-build and build scripts should run to prepare the Twitter data for the Social Media Archive.
 
-The project extracts and resolves short Twitter links (e.g. https://t.co/...) from a SQLite database and prepares Markdown files with their resolved URLs formatted as links.
+The project extracts and resolves short Twitter links (e.g. https://t.co/...) from a SQLite database and prepares Markdown files with their resolved URLs formatted as links.
 
 ---
 
@@ -12,17 +11,17 @@ The project extracts and resolves short Twitter links (e.g. https://t.co/...) f
 ```text
 
 To improve the speed of tweet extraction at build time, we decided to improve performance by resolving URLs
-and storing them in a new DB as an additional pre-build step.
-Then, at build time, we use our generated DB to speed 
+and storing them in the same database as an additional pre-build step.
+Then, at build time, we use the resolved URLs from the same database to speed 
 up the extraction process.
 
 -----------------------------------
 Example terminal input:
 
-python url_extraction_sql.py --db-path data.sqlite3 --tweet-db tweet --url-db resolved_urls.sqlite3
+python url_extraction.py --db-path data.sqlite3 --tweet-table tweet --url-table resolved_urls
 
 ┌────────────────────────────┐
-│ run url_extraction_sql.py  │     ← Pre-build 
+│ run url_extraction.py      │     ← Pre-build 
 └─────────────┬──────────────┘
               │
               ▼
@@ -34,7 +33,8 @@ python url_extraction_sql.py --db-path data.sqlite3 --tweet-db tweet --url-db re
               │
               ▼
 ┌────────────────────────────┐
-│ Stores in resolved_urls.db │
+│ Stores in resolved_urls    │
+│ table in data.sqlite3      │
 └────────────────────────────┘
 
 Example output:
@@ -43,7 +43,7 @@ Original URL                   Status     Resolved URL / Error
 --------------------------------------------------------------------------------
 https://t.co/1kb5KUmsjs        SUCCESS    https://social.freifunk.net/@freifunk
 --------------------------------------------------------------------------------
-Results saved to resolved_url SQLite database
+Results saved to 'resolved_urls' table in data.sqlite3
 Total 1 tweets processed in 2.48s
 Processing completed at: 2025-08-03 23:23:17
 
@@ -52,7 +52,7 @@ Processing completed at: 2025-08-03 23:23:17
 
 Example terminal input:
 
-python sql_extraction.py --db-path data.sqlite3 --tweet-table tweet --url-db-path resolved_urls.sqlite3  --url-table resolved_urls --output-dir ./src/content/tweets
+python sql_extraction.py --db-path data.sqlite3 --tweet-table tweet --url-table resolved_urls --output-dir ./src/content/tweets
 
 ┌────────────────────────────┐
 │ run sql_extraction.py      │     ←  During build
@@ -60,14 +60,15 @@ python sql_extraction.py --db-path data.sqlite3 --tweet-table tweet --url-db-pat
               │             
               ▼
  Read body text from SQLite tweet     ◄──────────┐       
-              │                                  │     ←  uses resolved_urls.db
-              ▼                                  │
+              │                                  │     ←  uses resolved_urls table
+              ▼                                  │       from same database
      Run text_url_replace()                      │
 (replace old link with resolved link)            │
               │                                  │
               ▼                                  │
 ┌────────────────────────────┐                   │
-│ acesses resolved_urls.db   │     ──────────────┘
+│ access resolved_urls table │     ──────────────┘
+│ in data.sqlite3            │
 └─────────────┬──────────────┘              
               │                             
               ▼    
@@ -107,6 +108,7 @@ Export Summary:
   Tweets containing t.co URLs: 1045
   URLs successfully replaced: 1107
   URLs left as t.co (failed/not found): 79
-  Output directory: ./again2_tweets
+  Output directory: ./src/content/tweets
   Total processing time: 1.54s
 Completed at: 2025-08-04 01:41:16
+

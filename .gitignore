@@ -7,3 +7,4 @@ data/
 .vscode/
 .dist/
 build/resolved_urls.db
+src/build/data.sqlite3

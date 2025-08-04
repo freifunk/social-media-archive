@@ -12,7 +12,7 @@ Author: Sandra Taskovic
 Sources: Claude AI and ChatGPT adding timer, signal handler and error handling
 Date: 2025-08-03
 Purpose: This script finds and resolves t.co URLs in a given string text to their original links,
-then save the results to an SQLite database. The results are also printed in the terminal.
+then save the results to a table in the same SQLite database. The results are also printed in the terminal.
  """
 
 # Global variables for clean shutdown
@@ -97,21 +97,20 @@ def resolve_tco_url(tco_url):
             'timestamp': datetime.now().isoformat()
         }
 
-def init_database(db_file):
-    """Initialize SQLite database with the required table.
+def init_resolved_urls_table(conn, table_name='resolved_urls'):
+    """Initialize the resolved_urls table in the existing database.
     Args:
-        db_file (str): The SQLite database file/path to initialize.
+        conn (sqlite3.Connection): The database connection.
+        table_name (str): The name of the table to create.
     Returns:
-        tuple: (connection, cursor) objects for the database.
+        sqlite3.Cursor: Cursor object for the database.
     Output:
         Creates a table for storing resolved URLs if it doesn't exist."""
     
-    conn = sqlite3.connect(db_file)
-    conn.row_factory = sqlite3.Row  # access columns by name
     cursor = conn.cursor()
     
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS resolved_urls (
+    cursor.execute(f'''
+        CREATE TABLE IF NOT EXISTS {table_name} (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             original_url TEXT NOT NULL,
             status TEXT NOT NULL,
@@ -122,13 +121,14 @@ def init_database(db_file):
     ''')
     
     conn.commit()
-    return conn, cursor
+    return cursor
 
-def find_and_resolve_tco_urls(text, cursor):
+def find_and_resolve_tco_urls(text, cursor, table_name='resolved_urls'):
     """Find all t.co URLs in text, resolve them, and save to SQLite database.
     Args:
         text (str): The input text containing t.co URLs.
         cursor (sqlite3.Cursor): The SQLite cursor to execute database operations.
+        table_name (str): The name of the table to store resolved URLs.
     Returns:
         None
     Output:
@@ -142,7 +142,6 @@ def find_and_resolve_tco_urls(text, cursor):
     tco_urls = re.findall(tco_pattern, text)
     
     if not tco_urls:
-        print("No t.co URLs found in the text.")
         return
 
     # Process each URL
@@ -157,8 +156,8 @@ def find_and_resolve_tco_urls(text, cursor):
         
         # Save to SQLite database
         try:
-            cursor.execute('''
-                INSERT INTO resolved_urls (original_url, status, resolved_url, timestamp)
+            cursor.execute(f'''
+                INSERT INTO {table_name} (original_url, status, resolved_url, timestamp)
                 VALUES (?, ?, ?, ?)
             ''', (result['original_url'], result['status'], result['resolved_url'], result['timestamp']))
             
@@ -167,7 +166,7 @@ def find_and_resolve_tco_urls(text, cursor):
             pass
 
 
-def main(db_path, tweet_db='tweets', url_db='resolved_urls'):
+def main(db_path, tweet_table='tweets', url_table='resolved_urls'):
     global connections, start_time, processed_count
     
     # Start timing
@@ -176,24 +175,21 @@ def main(db_path, tweet_db='tweets', url_db='resolved_urls'):
     print(f"Starting URL resolution at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("-" * 80)
 
-    # Initialize output database
-    conn, cursor = init_database(url_db)
-    connections['output'] = conn
+    # Connect to the database (same one for both tweets and resolved URLs)
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    connections['main'] = conn
 
-    # Connect to the input database containing tweets
-    tweet_conn = sqlite3.connect(db_path)
-    tweet_conn.row_factory = sqlite3.Row
-    tweet_cursor = tweet_conn.cursor()
-    connections['input'] = tweet_conn
+    # Initialize the resolved_urls table
+    cursor = init_resolved_urls_table(conn, url_table)
 
-    # Retrieve all tweets from the specified tweet database
-    tweet_cursor.execute(f"SELECT * FROM {tweet_db};")
-    rows = tweet_cursor.fetchall()
+    # Retrieve all tweets from the specified tweet table
+    cursor.execute(f"SELECT * FROM {tweet_table};")
+    rows = cursor.fetchall()
 
     if not rows:
-        print(f"No data found in table '{tweet_db}'.")
+        print(f"No data found in table '{tweet_table}'.")
         conn.close()
-        tweet_conn.close()
         return
     
     # Print table header
@@ -205,7 +201,7 @@ def main(db_path, tweet_db='tweets', url_db='resolved_urls'):
         data = dict(row)
         # Extract tweet text
         text = data.get("text", "").strip()
-        find_and_resolve_tco_urls(text, cursor)
+        find_and_resolve_tco_urls(text, cursor, url_table)
         conn.commit()
         processed_count += 1
 
@@ -227,34 +223,22 @@ def main(db_path, tweet_db='tweets', url_db='resolved_urls'):
     else:
         time_str = f"{seconds:.2f}s"
     
-    print(f"Results saved to {url_db} SQLite database")
+    print(f"Results saved to '{url_table}' table in {db_path}")
     print(f"Total {len(rows)} tweets processed in {time_str}")
     print(f"Processing completed at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     conn.close()
-    tweet_conn.close()
     connections.clear()
     return
 
 
 if __name__ == "__main__":
-    # Example test case
-
-    # sample_text = """
-    # Check out this article: https://t.co/knVzQ92haM
-    # And also this one: https://t.co/example123
-    # Some regular text here.
-    # Another link: https://t.co/abc123def
-    # Not a t.co link: https://google.com
-    # Final t.co link: https://t.co/xyz789
-    # """
-
     parser = argparse.ArgumentParser(
-        description="Data extraction to markdown from SQLite database",
+        description="Resolve t.co URLs from tweets and store in the same database",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
             Examples:
-            python3 sqlite_extraction.py --db-path path/to/database.db --table-name tweets --output-dir output_directory"
+            python url_extraction_sql.py --db-path data.sqlite3 --tweet-table tweet --url-table resolved_urls
             """
     )
 
@@ -262,21 +246,21 @@ if __name__ == "__main__":
         "--db-path",
         type=str,
         required=True,
-        help="Path to the SQLite twitter database file to resolve urls."
+        help="Path to the SQLite database file containing tweets."
     )
     parser.add_argument(
-        "--tweet-db",
+        "--tweet-table",
         type=str,   
         required=True,
         help="Name of the table containing tweets."
     )
     parser.add_argument(
-        "--url-db",
+        "--url-table",
         type=str,
         default='resolved_urls',
-        help="Name of the table to save resolved URLs."
+        help="Name of the table to create/use for storing resolved URLs (default: resolved_urls)."
     )
 
     args = parser.parse_args()
 
-    main(args.db_path, args.tweet_db, args.url_db)
+    main(args.db_path, args.tweet_table, args.url_table)
