@@ -137,12 +137,12 @@
 
 .search-result-text {
   line-height: var(--line-height-relaxed);
-  color: #1E1E1E !important;
+  color: var(--color-text-inverse);
   margin: 0;
 }
 
 .search-result-text * {
-  color: #1E1E1E !important;
+  color: var( --color-text-inverse);
 }
 
 .search-result-text a {
