@@ -2,8 +2,9 @@
 
 node_modules/
 src/content/tweets/
-data/
 .env
 .vscode/
-build/resolved_urls.db
-src/build/data.sqlite3
+.dist/
+/build/resolved_urls.db
+/build/data.sqlite3
+.astro/

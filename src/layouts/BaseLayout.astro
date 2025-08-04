@@ -3,6 +3,7 @@ import Header from '../components/header.astro';
 import Footer from '../components/footer.astro';
 import { getLogoPath, getLogoAlt } from '../config/site';
 import '../styles/global.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 const { pageTitle } = Astro.props;
 
 const logoPath = getLogoPath();
@@ -13,7 +14,6 @@ const logoAlt = getLogoAlt();
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} >
     <title>{pageTitle}</title>

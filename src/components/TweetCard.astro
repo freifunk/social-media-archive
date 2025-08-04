@@ -24,15 +24,15 @@ const formattedDate = new Date(post.data.createdAt).toLocaleDateString();
 // Always parse full markdown
 const fullHTML = await marked.parse(post.body);
 
-// Basic HTML-safe truncation without breaking tags
-function truncate(html: string, maxLength: number): string {
-  if (html.length <= maxLength) return html;
-
-  const end = html.lastIndexOf(' ', maxLength); // avoid cutting in the middle of a word or tag
-  return html.slice(0, end > 0 ? end : maxLength) + '...';
+// Truncate plain text (markdown) before converting to HTML
+function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  const end = text.lastIndexOf(' ', maxLength); // avoid cutting in the middle of a word
+  return text.slice(0, end > 0 ? end : maxLength) + '...';
 }
-
-const tweetBody = expanded ? fullHTML : truncate(fullHTML, 300); // increase limit slightly to allow full tags
+const tweetBody = expanded
+  ? fullHTML
+  : await marked.parse(truncateText(post.body, 300));
 ---
 
 <article class="card-border">
