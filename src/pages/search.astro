@@ -4,14 +4,10 @@ import SearchForm from '../components/SearchForm.astro';
 import SearchResults from '../components/SearchResults.astro';
 import { searchConfig } from '../config/search';
 
-const pageTitle = "Search";
 ---
 
-<BaseLayout pageTitle={pageTitle}>
-  <h2><i class="fab fa-twitter fa-icon social twitter"></i> {searchConfig.text.resultsTitle} Freifunk's Tweets</h2>
-
+<BaseLayout >
   <SearchForm />
   <SearchResults />
-
   <script src="../scripts/search.ts"></script>
 </BaseLayout>

@@ -38,7 +38,9 @@ export class SearchPageController {
   /**
    * Generates HTML for search results
    */
-  private generateSearchResultsHTML(results: any[]): string {
+  private async generateSearchResultsHTML(results: any[]): Promise<string> {
+    const { marked } = await import('marked');
+    
     return results
       .map((r) => {
         const { content, author, title, date, slug } = extractItemData(r.item);
@@ -46,13 +48,16 @@ export class SearchPageController {
         const dateString = date ? formatDate(date) : '';
         const relevanceScore = (1 - r.score).toFixed(2);
         
+        // Convert markdown content to HTML
+        const htmlContent = marked.parse(content);
+        
         return `
           <li class="search-result-item">
             ${date ? `<time datetime="${new Date(date).toISOString()}" class="search-result-date">${dateString}</time>` : ''}
             <div class="search-result-content">
               <strong class="search-result-author">@${author}</strong>
               ${title ? `<h3 class="search-result-title">${title}</h3>` : ''}
-              <p class="search-result-text">${content}</p>
+              <div class="search-result-text">${htmlContent}</div>
               ${slug ? `<a href="/tweets/${slug}/" class="search-result-link">${searchConfig.text.readMore}</a>` : ''}
               <small class="search-result-relevance">${searchConfig.text.relevanceLabel} ${relevanceScore}</small>
             </div>
@@ -193,7 +198,7 @@ export class SearchPageController {
       // Display results
       if (this.resultsList) {
         if (paginatedResults.results.length > 0) {
-          this.resultsList.innerHTML = this.generateSearchResultsHTML(paginatedResults.results);
+          this.resultsList.innerHTML = await this.generateSearchResultsHTML(paginatedResults.results);
         } else {
           this.showNoResults(searchTerm);
           return;

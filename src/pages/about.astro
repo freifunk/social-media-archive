@@ -1,65 +1,59 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const pageTitle = "About Me";
-
-const identity = {
-  firstName: "Sandra",
-  country: "Canada",
-  occupation: "Technical Writer",
-  hobbies: ["photography", "birdwatching", "baseball"],
-};
-
-const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
-
-const happy = true;
-const finished = false;
-const goal = 3;
-
-const skillColor = "navy";
-const fontWeight = "bold";
-const textCase = "uppercase";
-
+const pageTitle = "About the Social Media Archive";
 ---
-<style is:global define:vars={{skillColor, fontWeight, textCase}}>
-  .page-title {
-    color: purple;
-    font-size: var(--font-size-4xl);
-  }
-  .skill {
-    color: var(--skillColor);
-    font-weight: var(--fontWeight);
-    text-transform: var(--textCase);
-    font-weight: bold;
-  }
-</style>
 
- <BaseLayout pageTitle={pageTitle} >
-   <h2>... and my new Astro site!</h2>
-
-  <p>I am working through Astro's introductory tutorial. This is the second page on my website, and it's the first one I built myself!</p>
-
-  {happy && <p>I am happy to be learning Astro!</p>}
-
-    {finished && <p>I finished this tutorial!</p>}
-
-    {goal === 3 ? <p>My goal is to finish in 3 days.</p> : <p>My goal is not 3 days.</p>}
+<BaseLayout pageTitle={pageTitle}>
+  <section style="margin-bottom: 2rem;">
+    <h2>About the Website</h2>
+    <p class="text-medium">
+      The aim of this website was to create a static, user-friendly site that serves as an archive explorer 
+      for <strong>Freifunk's</strong> historical twitter social media posts. It includes a simple interface to 
+      <strong>browse all tweets inverse chronologically</strong> (newest to oldest), and a
+      <strong>search feature</strong> that lets you explore relevant tweets base on content and username. Lastly, it is designed to support additional social media archives in the future and is fully open source, allowing others to use this site as a template for their own archives.
+    </p>
+    <p class="text-medium">
+      To view a technical breakdown of how this archive was built, please visit
+      <a href="https://blog.freifunk.net/2025/08/04/sandra-taskovic-final-freifunk-social-media-archive-gsoc-2025/"> the project blog post</a>.
+    </p>
+  </section>
 
 
-  <p>This site will update as I complete more of the tutorial, so keep checking back and see how my journey is going!</p>
-  <p>Here are a few facts about me:</p>
-    <ul>
-    <li>My name is {identity.firstName}.</li>
-    <li>I live in {identity.country} and I work as a {identity.occupation}.</li>
-    {identity.hobbies.length >= 2 &&
-        <li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
-    }
+  <section style="margin-bottom: 2rem;">
+    <h2>About GSoC 2025 and the Contributor</h2>
+    <p class="text-medium">
+      This project was developed by <a href="  https://www.linkedin.com/in/sandrataskovic/"> <strong>Sandra Taskovic</strong></a> as part of her <a href="https://summerofcode.withgoogle.com/">Google Summer of Code 2025</a> contributor project. 
+      Over the summer of 2025, she spent approximately one hundred hours while working with a mentor from Freifunk to scope and build out
+      the archive in several phases:
+    </p>
+    <ul class="text-medium" style="padding-left: 1.5rem; list-style-type: disc;">
+
+      <li>Static Site Generator (SSG) setup with Astro</li>
+      <li>Data extraction tool for Twitter posts</li> 
+      <li>Static site mockup and design</li>
+      <li>Client-side search implementation</li>
+      <li>Customizable theming support</li>
+      <li>Documentation and deployment</li>
+      <li>Testing, optimizing, and ensuring scalability</li>
     </ul>
-    <p>My skills are:</p>
-    <ul>
-    {skills.map((skill) => <li class="skill">{skill}</li>)}
-    </ul>  
-  
+    <p class="text-medium">
+      At the time of making this archive, <strong>Sandra Taskovic is a Honors Computing Science student </strong> finishing her
+      undergraduate degree at the <strong>University of Alberta</strong>, in Canada. She has a passion for open source software and hopes
+      this project will create a lasting positive impact for the Freifunk community.
+    </p>
+  </section>
+
+  <section>
+    <h2>About Freifunk's Support</h2>
+    <p class="text-medium">
+      <a href="https://freifunk.net/en/">Freifunk</a> is a German-based open source initiative focused on building community-owned 
+      wireless networks. As a <a href = "https://summerofcode.withgoogle.com/programs/2025/organizations/freifunkmentoring">mentoring organization for GSoC</a> , Freifunk provided guidance, 
+      infrastructure, and support throughout the project.
+    </p>
+    <p class="text-medium">
+      A special thank you to <a href="https://github.com/andibraeu"> <strong>Andreas Bräu</strong></a>, whose 
+      thoughtful feedback and encouragement made this project possible.
+    </p>
+  </section>
 </BaseLayout>
-
-

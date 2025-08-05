@@ -1,6 +1,7 @@
 // Search utility functions
 import DOMPurify from 'dompurify';
 import Fuse from 'fuse.js';
+import { marked } from 'marked';
 import { searchConfig } from '../config/search';
 
 export interface SearchItem {
@@ -129,7 +130,10 @@ export class SearchManager {
     const totalPages = Math.ceil(totalResults / searchConfig.resultsPerPage);
     const startIndex = (page - 1) * searchConfig.resultsPerPage;
     const endIndex = startIndex + searchConfig.resultsPerPage;
-    const results = allResults.slice(startIndex, endIndex);
+    const results: SearchResult[] = allResults.slice(startIndex, endIndex).map(res => ({
+      item: res.item,
+      score: res.score ?? 0
+    }));
     
     return {
       results,
@@ -147,11 +151,10 @@ export class SearchManager {
  */
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-us", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const day = String(date.getDate()).padStart(2, '0');
+  return `Posted on ${year}-${month}-${day}`;
 }
 
 /**
