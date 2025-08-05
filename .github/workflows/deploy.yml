@@ -53,7 +53,7 @@ jobs:
     - name: Extract tweets from SQLite
       run: |
         cd build
-        python sqlite_extraction.py \
+        python sql_extraction.py \
           --db-path ../database.db \
           --table-name tweet \
           --output-dir ../src/content/tweets
