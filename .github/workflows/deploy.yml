@@ -55,7 +55,7 @@ jobs:
         cd build
         python sql_extraction.py \
           --db-path ../database.db \
-          --table-name tweet \
+          --tweet-table tweet \
           --output-dir ../src/content/tweets
           
     - name: Install Node.js dependencies
