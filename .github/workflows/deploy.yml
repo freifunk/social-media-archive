@@ -14,6 +14,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v5
       
+    - name: Create custom.config.mjs from secret
+      run: |
+        if [ -n "${{ secrets.CUSTOM_CONFIG }}" ]; then
+          cat > custom.config.mjs << 'EOF'
+          ${{ secrets.CUSTOM_CONFIG }}
+          EOF
+          echo "custom.config.mjs created from secret"
+        else
+          echo "CUSTOM_CONFIG secret not set, skipping custom.config.mjs creation"
+        fi
+      
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
