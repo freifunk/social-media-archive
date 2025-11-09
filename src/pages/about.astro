@@ -4,57 +4,107 @@ import { siteConfig } from "../config/site";
 
 const pageTitle = siteConfig.about.pageTitle;
 const about = siteConfig.about.sections;
-
-function renderParagraph(para: any) {
-  if (para.list) {
-    return (
-      <ul class="text-medium" style="padding-left: 1.5rem; list-style-type: disc;">
-        {para.list.map((item: string) => (
-          <li>{item}</li>
-        ))}
-      </ul>
-    );
-  }
-  
-  if (para.link) {
-    // Paragraph with links - build content with links
-    return (
-      <p class="text-medium">
-        {para.text && <span set:html={para.text} />}
-        {para.link && <a href={para.link.url}><strong>{para.link.text}</strong></a>}
-        {para.textAfter}
-        {para.link2 && <a href={para.link2.url}>{para.link2.text}</a>}
-        {para.textAfter2}
-      </p>
-    );
-  }
-  
-  if (para.text) {
-    return <p class="text-medium" set:html={para.text} />;
-  }
-  
-  return null;
-}
 ---
 
 <BaseLayout pageTitle={pageTitle}>
   <section style="margin-bottom: 2rem;">
     <h2>{about.website.title}</h2>
-    {about.website.paragraphs.map((para) => renderParagraph(para))}
+    {about.website.paragraphs.map((para) => {
+      if (para.list) {
+        return (
+          <ul class="text-medium" style="padding-left: 1.5rem; list-style-type: disc;">
+            {para.list.map((item: string) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        );
+      }
+      if (para.link) {
+        return (
+          <p class="text-medium">
+            {para.text && <Fragment set:html={para.text} />}
+            {para.link && <a href={para.link.url}><strong>{para.link.text}</strong></a>}
+            {para.textAfter}
+            {para.link2 && <a href={para.link2.url}>{para.link2.text}</a>}
+            {para.textAfter2}
+          </p>
+        );
+      }
+      if (para.text) {
+        return <p class="text-medium" set:html={para.text} />;
+      }
+      return null;
+    })}
   </section>
 
   <section style="margin-bottom: 2rem;">
     <h2>{about.gsoc.title}</h2>
-    {about.gsoc.paragraphs.map((para) => renderParagraph(para))}
+    {about.gsoc.paragraphs.map((para) => {
+      if (para.list) {
+        return (
+          <ul class="text-medium" style="padding-left: 1.5rem; list-style-type: disc;">
+            {para.list.map((item: string) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        );
+      }
+      if (para.link) {
+        return (
+          <p class="text-medium">
+            {para.text && <Fragment set:html={para.text} />}
+            {para.link && <a href={para.link.url}><strong>{para.link.text}</strong></a>}
+            {para.textAfter}
+            {para.link2 && <a href={para.link2.url}>{para.link2.text}</a>}
+            {para.textAfter2}
+          </p>
+        );
+      }
+      if (para.text) {
+        return <p class="text-medium" set:html={para.text} />;
+      }
+      return null;
+    })}
   </section>
 
   <section>
     <h2>{about.freifunk.title}</h2>
-    {about.freifunk.paragraphs.map((para) => renderParagraph(para))}
+    {about.freifunk.paragraphs.map((para) => {
+      if (para.link) {
+        return (
+          <p class="text-medium">
+            {para.text && <Fragment set:html={para.text} />}
+            {para.link && <a href={para.link.url}>{para.link.text}</a>}
+            {para.textAfter}
+            {para.link2 && <a href={para.link2.url}>{para.link2.text}</a>}
+            {para.textAfter2}
+          </p>
+        );
+      }
+      if (para.text) {
+        return <p class="text-medium" set:html={para.text} />;
+      }
+      return null;
+    })}
   </section>
 
   <section>
     <h2>{about.cyd.title}</h2>
-    {about.cyd.paragraphs.map((para) => renderParagraph(para))}
+    {about.cyd.paragraphs.map((para) => {
+      if (para.link) {
+        return (
+          <p class="text-medium">
+            {para.link && <a href={para.link.url}>{para.link.text}</a>}
+            {para.textAfter}
+            {para.link2 && <a href={para.link2.url}>{para.link2.text}</a>}
+            {para.textAfter2}
+          </p>
+        );
+      }
+      if (para.text) {
+        return <p class="text-medium" set:html={para.text} />;
+      }
+      return null;
+    })}
   </section>
 </BaseLayout>
