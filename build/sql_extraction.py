@@ -1,3 +1,32 @@
+"""
+Social Media Archive - SQLite to Markdown Exporter
+
+This script extracts exported Twitter data from an SQLite database
+and converts each entry to a markdown file. It replaces t.co URLs with their resolved 
+URLs from a resolved_urls table in the same database and formats them into markdown link format.
+The script assumes there is a "text", "tweetID" and "id" column in the tweet db,
+and "original_url", "resolved_url", "status" columns in the resolved_urls table.
+
+Copyright (C) 2025 Freifunk
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Author: Sandra Taskovic
+Date: 2025-08-03
+Source: Claude AI took my previous scripts and re-structured into a class to improve performance, added error handling and timer.
+"""
+
 import sqlite3
 import os
 import yaml  # Requires: pip install PyYAML
@@ -6,17 +35,6 @@ import re
 import time
 import json
 from datetime import datetime
-
-"""
-Author: Sandra Taskovic
-Date: 2025-08-03
-Source: Claude AI took my previous scripts and re-structured into a class to improve performance, added error handling and timer.
-Purpose: This script extracts exported twitter data from an SQLite database
-and converts each entry to a markdown file. It replaces t.co URLs with their resolved 
-URLs from a resolved_urls table in the same database and formats them into markdown link format.
-The script assumes there is a "text", "tweetID" and "id" column in the tweet db,
-and "original_url", "resolved_url", "status" columns in the resolved_urls table.
-"""
 
 class TwitterToMarkdownExporter:
     def __init__(self, db_path):

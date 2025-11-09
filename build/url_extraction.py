@@ -1,3 +1,29 @@
+"""
+Social Media Archive - URL Resolution Script
+
+This script finds and resolves t.co URLs in a given string text to their original links,
+then saves the results to a table in the same SQLite database. The results are also printed in the terminal.
+
+Copyright (C) 2025 Freifunk
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Author: Sandra Taskovic
+Sources: Claude AI and ChatGPT adding timer, signal handler and error handling
+Date: 2025-08-03
+"""
+
 import requests
 import re
 import sqlite3
@@ -6,14 +32,6 @@ import argparse
 import time
 import signal
 import sys
-
-"""
-Author: Sandra Taskovic
-Sources: Claude AI and ChatGPT adding timer, signal handler and error handling
-Date: 2025-08-03
-Purpose: This script finds and resolves t.co URLs in a given string text to their original links,
-then save the results to a table in the same SQLite database. The results are also printed in the terminal.
- """
 
 # Global variables for clean shutdown
 connections = {}
