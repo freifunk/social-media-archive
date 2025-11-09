@@ -82,11 +82,6 @@ const defaultConfig = {
   logo: {
     alt: 'Freifunk Logo',
     possibleNames: [
-      'logo.png',
-      'logo.svg',
-      'logo.jpg',
-      'logo.jpeg',
-      'logo.webp',
       'logo_freifunknet.png', // fallback to original logo
     ]
   },
