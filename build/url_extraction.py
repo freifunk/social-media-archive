@@ -250,7 +250,8 @@ def main(db_path, tweet_table='tweets', url_table='resolved_urls'):
     return
 
 
-if __name__ == "__main__":
+def cli_main():
+    """Main function to handle command line arguments and execute the URL resolution process."""
     parser = argparse.ArgumentParser(
         description="Resolve t.co URLs from tweets and store in the same database",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -294,7 +295,7 @@ if __name__ == "__main__":
         
         if not os.path.exists(args.config):
             print(f"Error: Config file not found: {args.config}")
-            sys.exit(1)
+            return
         
         try:
             with open(args.config, 'r') as f:
@@ -307,20 +308,24 @@ if __name__ == "__main__":
             # Validate required fields
             if not db_path or not tweet_table:
                 print("Error: Config file must contain database.path and database.tweet_table")
-                sys.exit(1)
+                return
             
             main(db_path, tweet_table, url_table)
-            sys.exit(0)
+            return
         except json.JSONDecodeError as e:
             print(f"Error: Invalid JSON in config file: {e}")
-            sys.exit(1)
+            return
         except Exception as e:
             print(f"Error loading config file: {e}")
-            sys.exit(1)
+            return
     
     # Use command-line arguments (backward compatibility)
     if not args.db_path or not args.tweet_table:
         print("Error: --db-path and --tweet-table are required when not using --config")
-        sys.exit(1)
+        return
 
     main(args.db_path, args.tweet_table, args.url_table)
+
+
+if __name__ == "__main__":
+    cli_main()
