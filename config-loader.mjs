@@ -101,11 +101,25 @@ const defaultConfig = {
 // Try to load custom config (optional, for forks)
 let customConfig = {};
 try {
-  const customModule = await import('./custom.config.mjs');
-  customConfig = customModule.default || customModule || {};
+  // Check if file exists before importing
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const { fileURLToPath, pathToFileURL } = await import('node:url');
+  
+  // Get the directory of the current module
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const customConfigPath = path.join(__dirname, 'custom.config.mjs');
+  
+  if (fs.existsSync(customConfigPath)) {
+    // Use dynamic import with file:// URL to prevent static analysis by Vite/Rollup
+    const customConfigUrl = pathToFileURL(customConfigPath).href;
+    const customModule = await import(customConfigUrl);
+    customConfig = customModule.default || customModule || {};
+  }
 } catch (error) {
-  // custom.config.mjs doesn't exist, use defaults only
-  // This is expected for the default repository
+  // custom.config.mjs doesn't exist or couldn't be loaded, use defaults only
+  // This is expected for the default repository or when file is missing
 }
 
 // Deep merge function for nested objects
