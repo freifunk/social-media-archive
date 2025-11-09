@@ -13,7 +13,7 @@ jobs:
     if: github.repository_owner != 'freifunk'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0  # Fetch full history for merging
           token: ${{ secrets.GITHUB_TOKEN }}
