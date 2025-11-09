@@ -11,7 +11,7 @@ export const siteConfig = {
       'logo.webp',
       'logo_freifunknet.png', // fallback to current logo
     ],
-    alt: 'Site Logo',
+    alt: 'Andreas Bräu Logo',
     // Size configuration
     desktop: {
       height: '80px', // increased from 60px
@@ -37,30 +37,30 @@ export const siteConfig = {
   
   // Theme configuration
   theme: {
-    // Primary colors
-    primary: '#DF3A6C',
-    primaryHover: '#553C9A',
-    secondary: '#ff9776',
-    secondaryHover: '#e6855a',
-    accent: '#00539F',
-    accentHover: '#0066cc',
+    // Primary colors (based on blog.andi95.de)
+    primary: '#0F1C33', // Dark blue from blog
+    primaryHover: '#1a2d4d',
+    secondary: '#C0C0C0', // Silver/metallic
+    secondaryHover: '#D3D3D3',
+    accent: '#C0C0C0', // Silver for accents
+    accentHover: '#E0E0E0',
     
     // Text colors
-    textPrimary: '#DF3A6C',
-    textSecondary: '#DF6C3A',
-    textMuted: '#C4A1B4',
-    textInverse: '#1E1E1E',
+    textPrimary: '#FFFFFF', // White
+    textSecondary: '#E0E0E0', // Light gray
+    textMuted: '#B0B0B0', // Gray
+    textInverse: '#0F1C33', // Dark blue for Light Mode
     
     // Background colors
-    bgPrimary: '#f1f5f9',
-    bgSecondary: '#fff',
-    bgTertiary: '#F8FCFD',
-    bgDark: '#4c1d95',
+    bgPrimary: '#0F1C33', // Dark blue
+    bgSecondary: '#1a2d4d', // Slightly lighter dark blue
+    bgTertiary: '#253d5f', // Even lighter for cards
+    bgDark: '#0a1526', // Very dark
     
     // Border colors
-    borderLight: '#eee',
-    borderMedium: '#dee2e6',
-    borderDotted: '#a1a1a1',
+    borderLight: '#3a4d6b', // Dark gray for Dark Mode
+    borderMedium: '#4a5d7b',
+    borderDotted: '#6a7d9b',
     
     // Icon colors
     iconHeart: '#e91e63',
@@ -168,9 +168,9 @@ export const siteConfig = {
 
 // Helper function to get the logo path
 export function getLogoPath(): string {
-  // In a real implementation, you might want to check which files actually exist
-  // For now, we'll return the first preferred option and let the browser handle fallbacks
-  return `/${siteConfig.logo.possibleNames[5]}`;
+  // Returns the first preferred logo (logo.png) which should be the user's custom logo
+  // Falls back to browser's 404 handling if not found
+  return `/${siteConfig.logo.possibleNames[0]}`;
 }
 
 // Helper function to get logo alt text
