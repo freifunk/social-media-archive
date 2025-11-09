@@ -4,7 +4,7 @@
 .site-header {
   width: 100%;
   background-color: var(--color-bg-secondary);
-  border-bottom: 2px solid var(--color-primary);
+  border-bottom: 2px solid var(--color-accent);
   margin-bottom: var(--spacing-xl);
 }
 
@@ -42,7 +42,7 @@
 /* Desktop Navigation Links */
 .nav-links {
   display: flex;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-lg);
   align-items: center;
 }
 
@@ -59,8 +59,8 @@
 }
 
 .nav-link:hover {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
+  background-color: var(--color-accent);
+  color: var(--color-text-primary);
   transform: translateY(-2px);
 }
 
@@ -115,8 +115,8 @@
 }
 
 .mobile-nav-link:hover {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
+  background-color: var(--color-accent);
+  color: var(--color-text-primary);
 }
 
 /* Mobile Navigation Active State */

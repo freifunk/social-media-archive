@@ -19,7 +19,8 @@
 }
 
 .btn-primary:hover:not(.btn-disabled) {
-  background: #e9ecef;
+  background: var(--color-bg-tertiary);
+  opacity: 0.9;
 }
 
 .btn-secondary {
@@ -94,16 +95,18 @@
   color: var(--color-text-primary);
 }
 
-.content p {
-  color: var(--color-text-inverse);
+.content p,
+.content * {
+  color: var(--color-text-primary);
 }
 
+/* Links in content should keep accent color */
 .content a {
-  color: var(--color-accent);
+  color: var(--color-accent) !important;
 }
 
 .content a:hover {
-  color: var(--color-accent-hover);
+  color: var(--color-accent-hover) !important;
 }
 
 /* Actions */

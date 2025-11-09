@@ -17,7 +17,16 @@ h3 {
 
 p {
   line-height: var(--line-height-base);
-  color: var(--color-text-inverse);
+  color: var(--color-text-primary);
+}
+
+/* List Styles */
+ul, ol {
+  color: var(--color-text-primary);
+}
+
+li {
+  color: var(--color-text-primary);
 }
 
 /* Link Styles */

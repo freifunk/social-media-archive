@@ -1,29 +1,29 @@
 /* CSS Custom Properties for Theming */
 :root {
-  /* Colors */
-  --color-primary: #DF3A6C;
-  --color-primary-hover: #553C9A;
-  --color-secondary: #ff9776;
-  --color-secondary-hover: #e6855a;
-  --color-accent: #00539F;
-  --color-accent-hover: #0066cc;
+  /* Colors (based on blog.andi95.de) */
+  --color-primary: #0F1C33; /* Dark blue from blog */
+  --color-primary-hover: #1a2d4d;
+  --color-secondary: #C0C0C0; /* Silver/metallic */
+  --color-secondary-hover: #D3D3D3;
+  --color-accent: #C0C0C0; /* Silver for accents */
+  --color-accent-hover: #E0E0E0;
   
   /* Text Colors */
-  --color-text-primary: #DF3A6C;
-  --color-text-secondary: #DF6C3A;
-  --color-text-muted: #C4A1B4;
-  --color-text-inverse: #1E1E1E;
+  --color-text-primary: #FFFFFF; /* White */
+  --color-text-secondary: #E0E0E0; /* Light gray */
+  --color-text-muted: #B0B0B0; /* Gray */
+  --color-text-inverse: #0F1C33; /* Dark blue for Light Mode */
   
   /* Background Colors */
-  --color-bg-primary: #f1f5f9;
-  --color-bg-secondary: #fff;
-  --color-bg-tertiary: #F8FCFD;
-  --color-bg-dark: #4c1d95;
+  --color-bg-primary: #0F1C33; /* Dark blue */
+  --color-bg-secondary: #1a2d4d; /* Slightly lighter dark blue */
+  --color-bg-tertiary: #253d5f; /* Even lighter for cards */
+  --color-bg-dark: #0a1526; /* Very dark */
   
   /* Border Colors */
-  --color-border-light: #eee;
-  --color-border-medium: #dee2e6;
-  --color-border-dotted: #a1a1a1;
+  --color-border-light: #3a4d6b; /* Dark gray for Dark Mode */
+  --color-border-medium: #4a5d7b;
+  --color-border-dotted: #6a7d9b;
   
   /* Typography */
   --font-family-base: sans-serif;
@@ -72,4 +72,38 @@
   --icon-twitter: #1da1f2;
   --icon-github: #333;
   --icon-youtube: #ff0000;
+}
+
+/* Light Mode (optional, if Dark Mode is disabled) */
+[data-theme="light"] {
+  /* Primary colors */
+  --color-primary: #0F1C33;
+  --color-primary-hover: #1a2d4d;
+  --color-secondary: #C0C0C0;
+  --color-secondary-hover: #D3D3D3;
+  --color-accent: #00539F;
+  --color-accent-hover: #0066cc;
+  
+  /* Text Colors */
+  --color-text-primary: #0F1C33;
+  --color-text-secondary: #4a5d7b;
+  --color-text-muted: #6a7d9b;
+  --color-text-inverse: #FFFFFF;
+  
+  /* Background Colors */
+  --color-bg-primary: #f1f5f9;
+  --color-bg-secondary: #fff;
+  --color-bg-tertiary: #F8FCFD;
+  --color-bg-dark: #0F1C33;
+  
+  /* Border Colors */
+  --color-border-light: #eee;
+  --color-border-medium: #dee2e6;
+  --color-border-dotted: #a1a1a1;
+}
+
+/* Dark Mode (default) */
+[data-theme="dark"],
+:root {
+  /* Already defined above, here for clarity */
 }
