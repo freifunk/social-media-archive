@@ -294,7 +294,7 @@ if __name__ == "__main__":
         
         if not os.path.exists(args.config):
             print(f"Error: Config file not found: {args.config}")
-            return
+            sys.exit(1)
         
         try:
             with open(args.config, 'r') as f:
@@ -307,20 +307,20 @@ if __name__ == "__main__":
             # Validate required fields
             if not db_path or not tweet_table:
                 print("Error: Config file must contain database.path and database.tweet_table")
-                return
+                sys.exit(1)
             
             main(db_path, tweet_table, url_table)
-            return
+            sys.exit(0)
         except json.JSONDecodeError as e:
             print(f"Error: Invalid JSON in config file: {e}")
-            return
+            sys.exit(1)
         except Exception as e:
             print(f"Error loading config file: {e}")
-            return
+            sys.exit(1)
     
     # Use command-line arguments (backward compatibility)
     if not args.db_path or not args.tweet_table:
         print("Error: --db-path and --tweet-table are required when not using --config")
-        return
+        sys.exit(1)
 
     main(args.db_path, args.tweet_table, args.url_table)
