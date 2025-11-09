@@ -1,5 +1,6 @@
 ---
 import { getLogoPath, getLogoAlt, siteConfig } from '../config/site';
+import ThemeToggle from './ThemeToggle.astro';
 
 const logoPath = getLogoPath();
 const logoAlt = getLogoAlt();
@@ -15,6 +16,7 @@ const nav = siteConfig.navigation;
         <a href="/" class="nav-link">{nav.search}</a>
         <a href="/tweets/" class="nav-link">{nav.tweets}</a>
         <a href="/about/" class="nav-link">{nav.about}</a>
+        <ThemeToggle />
       </div>
       <div class="hamburger">
         <span class="line"></span>
@@ -26,5 +28,8 @@ const nav = siteConfig.navigation;
       <a href="/" class="mobile-nav-link">{nav.search}</a>
       <a href="/tweets/" class="mobile-nav-link">{nav.tweets}</a>
       <a href="/about/" class="mobile-nav-link">{nav.about}</a>
+      <div style="display: flex; justify-content: center; padding: var(--spacing-md);">
+        <ThemeToggle />
+      </div>
     </div>
   </nav>
