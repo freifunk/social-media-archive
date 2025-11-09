@@ -2,12 +2,14 @@
 import Header from '../components/header.astro';
 import Footer from '../components/footer.astro';
 import { getLogoPath, getLogoAlt } from '../config/site';
+import { generateThemeCSS } from '../utils/theme';
 import '../styles/global.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 const { pageTitle } = Astro.props;
 
 const logoPath = getLogoPath();
 const logoAlt = getLogoAlt();
+const themeCSS = generateThemeCSS();
 ---
 
 <html lang="en">
@@ -17,6 +19,7 @@ const logoAlt = getLogoAlt();
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} >
     <title>{pageTitle}</title>
+    <style set:html={themeCSS} />
   </head>
   <body>
     <Header />

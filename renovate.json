@@ -33,5 +33,9 @@
         "after 6am every weekday"
       ]
     }
-  ]
+  ],
+  "platformAutomerge": true,
+  "forkProcessing": "enabled",
+  "rebaseWhen": "behind-base-branch",
+  "rebaseStalePrs": true
 }

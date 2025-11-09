@@ -1,0 +1,44 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    # Runs daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # Only run on forks (skip if repository owner is freifunk)
+    if: github.repository_owner != 'freifunk'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch full history for merging
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/freifunk/social-media-archive.git || true
+          git fetch upstream
+
+      - name: Merge upstream changes
+        run: |
+          git checkout main || git checkout master
+          BRANCH=$(git branch --show-current)
+          git merge upstream/$BRANCH --no-edit || echo "No changes to merge"
+          
+      - name: Push changes
+        if: success()
+        run: |
+          BRANCH=$(git branch --show-current)
+          git push origin $BRANCH || echo "Nothing to push"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

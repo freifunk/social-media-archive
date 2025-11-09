@@ -4,6 +4,7 @@ import yaml  # Requires: pip install PyYAML
 import argparse
 import re
 import time
+import json
 from datetime import datetime
 
 """
@@ -291,11 +292,53 @@ Examples:
     parser.add_argument(
         "--output-dir",
         type=str,
-        required=True,
+        required=False,
         help="Directory to save the exported markdown files"
     )
     
+    parser.add_argument(
+        "--config",
+        type=str,
+        help="Path to JSON configuration file (optional, overrides other arguments if provided)"
+    )
+    
     args = parser.parse_args()
+    
+    # Load config from file if provided
+    if args.config:
+        if not os.path.exists(args.config):
+            print(f"Error: Config file not found: {args.config}")
+            return
+        
+        try:
+            with open(args.config, 'r') as f:
+                config = json.load(f)
+            
+            db_path = config.get('database', {}).get('path', args.db_path)
+            tweet_table = config.get('database', {}).get('tweet_table', args.tweet_table)
+            url_table = config.get('database', {}).get('url_table', args.url_table or 'resolved_urls')
+            output_dir = config.get('output', {}).get('directory', args.output_dir)
+            
+            # Validate required fields
+            if not db_path or not tweet_table or not output_dir:
+                print("Error: Config file must contain database.path, database.tweet_table, and output.directory")
+                return
+            
+            # Create exporter and run with config
+            exporter = TwitterToMarkdownExporter(db_path)
+            exporter.export_to_markdown(tweet_table, output_dir, url_table)
+            return
+        except json.JSONDecodeError as e:
+            print(f"Error: Invalid JSON in config file: {e}")
+            return
+        except Exception as e:
+            print(f"Error loading config file: {e}")
+            return
+    
+    # Use command-line arguments (backward compatibility)
+    if not args.db_path or not args.tweet_table or not args.output_dir:
+        print("Error: --db-path, --tweet-table, and --output-dir are required when not using --config")
+        return
     
     # Create exporter and run
     exporter = TwitterToMarkdownExporter(args.db_path)

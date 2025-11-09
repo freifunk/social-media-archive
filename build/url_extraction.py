@@ -260,7 +260,49 @@ if __name__ == "__main__":
         default='resolved_urls',
         help="Name of the table to create/use for storing resolved URLs (default: resolved_urls)."
     )
+    
+    parser.add_argument(
+        "--config",
+        type=str,
+        help="Path to JSON configuration file (optional, overrides other arguments if provided)"
+    )
 
     args = parser.parse_args()
+    
+    # Load config from file if provided
+    if args.config:
+        import json
+        import os
+        
+        if not os.path.exists(args.config):
+            print(f"Error: Config file not found: {args.config}")
+            return
+        
+        try:
+            with open(args.config, 'r') as f:
+                config = json.load(f)
+            
+            db_path = config.get('database', {}).get('path', args.db_path)
+            tweet_table = config.get('database', {}).get('tweet_table', args.tweet_table)
+            url_table = config.get('database', {}).get('url_table', args.url_table or 'resolved_urls')
+            
+            # Validate required fields
+            if not db_path or not tweet_table:
+                print("Error: Config file must contain database.path and database.tweet_table")
+                return
+            
+            main(db_path, tweet_table, url_table)
+            return
+        except json.JSONDecodeError as e:
+            print(f"Error: Invalid JSON in config file: {e}")
+            return
+        except Exception as e:
+            print(f"Error loading config file: {e}")
+            return
+    
+    # Use command-line arguments (backward compatibility)
+    if not args.db_path or not args.tweet_table:
+        print("Error: --db-path and --tweet-table are required when not using --config")
+        return
 
     main(args.db_path, args.tweet_table, args.url_table)

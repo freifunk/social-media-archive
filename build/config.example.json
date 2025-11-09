@@ -1,0 +1,16 @@
+{
+  "database": {
+    "path": "data.sqlite3",
+    "tweet_table": "tweet",
+    "url_table": "resolved_urls"
+  },
+  "output": {
+    "directory": "./src/content/tweets"
+  },
+  "url_resolution": {
+    "enabled": true,
+    "timeout_seconds": 10,
+    "max_retries": 3
+  }
+}
+
