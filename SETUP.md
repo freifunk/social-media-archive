@@ -288,19 +288,6 @@ Example: Using config file in workflow
 
 ## Keeping Up with Updates
 
-### Automatic Code Updates from Upstream
-
-This repository includes a GitHub Actions workflow (`.github/workflows/sync-upstream.yml`) that automatically syncs code changes from the original repository to your fork.
-
-**How it works:**
-- Runs daily at 2 AM UTC
-- Can also be triggered manually via the "Actions" tab → "Sync Upstream" → "Run workflow"
-- Only runs on forks (automatically skips on the original repository)
-- Automatically merges upstream changes into your `main` branch
-- Pushes changes if there are updates
-
-**No setup required!** The workflow is already configured and will work automatically on any fork of this repository.
-
 ### Automatic Dependency Updates with Renovate
 
 This repository is configured with Renovate Bot for automatic dependency updates. If you've forked the repository:
