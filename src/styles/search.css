@@ -6,7 +6,7 @@
   gap: var(--spacing-md);
   max-width: 100%;
   width: 100%;
-  border: 2px solid var(--color-text-primary);
+  border: 2px solid var(--color-primary); /* Magenta border */
   border-radius: var(--border-radius-md);
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-xl);
@@ -17,7 +17,7 @@
   gap: var(--spacing-md);
   max-width: 100%;
   width: 100%;
-  border: 2px solid var(--color-text-primary);
+  border: 2px solid var(--color-primary); /* Magenta border */
   border-radius: var(--border-radius-md);
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-xl);
@@ -36,13 +36,13 @@
 .search-label {
   font-weight: bold;
   font-size: var(--font-size-2xl);
-  color: var(--color-text-primary);
+  color: var(--color-primary); /* Magenta for search heading */
 }
 
 .search-widget .search-label {
   font-weight: bold;
   font-size: var(--font-size-2xl);
-  color: var(--color-text-primary);
+  color: var(--color-primary); /* Magenta for search heading */
 }
 
 .search-description {
@@ -72,15 +72,15 @@
 }
 
 .search-input:focus {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-primary); /* Magenta focus */
   outline-offset: 2px;
-  border-color: var(--color-accent);
+  border-color: var(--color-primary); /* Magenta border on focus */
 }
 
 .search-widget .search-input:focus {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-primary); /* Magenta focus */
   outline-offset: 2px;
-  border-color: var(--color-accent);
+  border-color: var(--color-primary); /* Magenta border on focus */
 }
 
 /* Search Results */

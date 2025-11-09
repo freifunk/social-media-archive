@@ -9,3 +9,6 @@ dist/
 /build/resolved_urls.db
 /build/data.sqlite3
 .astro/
+
+# Custom configuration (for forks)
+custom.config.mjs

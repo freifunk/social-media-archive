@@ -1,7 +1,7 @@
 ---
 import Header from '../components/header.astro';
 import Footer from '../components/footer.astro';
-import { getLogoPath, getLogoAlt } from '../config/site';
+import { getLogoPath, getLogoAlt, getFavicons } from '../config/site';
 import { generateThemeCSS } from '../utils/theme';
 import '../styles/global.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -10,14 +10,15 @@ const { pageTitle } = Astro.props;
 const logoPath = getLogoPath();
 const logoAlt = getLogoAlt();
 const themeCSS = generateThemeCSS();
+const favicons = getFavicons();
 ---
 
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href={favicons.favicon32x32} />
+    <link rel="icon" type="image/png" href={favicons.favicon192x192} sizes="192x192" />
+    <link rel="apple-touch-icon" href={favicons.appleTouchIcon} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} >
     <title>{pageTitle}</title>

@@ -42,18 +42,91 @@ This guide explains how to fork this repository and customize it for your own so
 
 All customization is done through configuration files, making it easy to maintain your fork while receiving updates from upstream.
 
-### 1. Logo
+### 1. Visual Customization (Colors, Logo, Favicons)
 
-Place your logo file in the `public/` directory with one of these names (in order of preference):
-- `logo.png`
-- `logo.svg`
-- `logo.jpg`
-- `logo.jpeg`
-- `logo.webp`
+**Important**: Don't edit `astro.config.mjs` directly! Instead, use `custom.config.mjs` to avoid merge conflicts when updating from upstream.
 
-The site will automatically use the first available logo file.
+1. **Copy the example config**:
+   ```bash
+   cp custom.config.example.mjs custom.config.mjs
+   ```
 
-### 2. Site Configuration
+2. **Edit `custom.config.mjs`** to customize your site:
+
+```javascript
+// custom.config.mjs
+export default {
+  // Colors - Separate light and dark mode configurations
+  colors: {
+    // Light Mode (optional - if not provided, uses Freifunk defaults)
+    // light: { ... },
+    
+    // Dark Mode (optional - if not provided, light mode will be used)
+    dark: {
+      primary: '#0F1C33',
+      primaryHover: '#1a2d4d',
+      accent: '#C0C0C0',
+      textPrimary: '#FFFFFF',
+      bgPrimary: '#0F1C33',
+      // ... customize dark mode colors
+    }
+  },
+  
+  // Logo configuration
+  logo: {
+    alt: 'My Site Logo',
+    possibleNames: ['logo.png', 'logo.svg']
+  },
+  
+  // Favicon paths
+  favicons: {
+    favicon32x32: '/favicon-32x32.png',
+    favicon192x192: '/favicon-192x192.png',
+    appleTouchIcon: '/apple-touch-icon.png'
+  }
+};
+```
+
+**Note**: 
+- Light mode uses Freifunk defaults (original design)
+- Dark mode is optional - if you don't provide `colors.dark`, light mode colors will be used for dark mode too
+- You can customize both modes separately, or just one
+
+**Why `custom.config.mjs`?**
+- ✅ It's in `.gitignore` - your customizations won't be committed
+- ✅ No merge conflicts when updating from upstream
+- ✅ Only override what you need - defaults are in `config-loader.mjs`
+
+### 2. Adding Your Assets
+
+Place your assets in the `public/` directory:
+
+- **Logo**: `logo.png` (or svg, jpg, webp) - will be used automatically
+- **Favicons**: 
+  - `favicon-32x32.png` (32x32 pixels)
+  - `favicon-192x192.png` (192x192 pixels)
+  - `apple-touch-icon.png` (180x180 pixels)
+
+### 3. Customizing About Page Content
+
+Edit `src/config/about.ts` to customize the About page content:
+
+```typescript
+export const aboutContent = {
+  pageTitle: 'About My Archive',
+  sections: {
+    website: {
+      title: 'About the Website',
+      paragraphs: [
+        { text: 'Your custom content here...' }
+      ]
+    }
+    // Add more sections as needed
+  }
+};
+```
+
+### 4. Site Configuration
 
 Edit `src/config/site.ts` to customize:
 
@@ -62,8 +135,7 @@ Edit `src/config/site.ts` to customize:
 - `description`: Site description
 - `siteName`: Site name
 
-#### Logo Settings
-- `logo.alt`: Alt text for the logo
+#### Logo Size Settings
 - `logo.desktop.height`: Logo height on desktop
 - `logo.mobile.height`: Logo height on mobile
 
@@ -72,23 +144,7 @@ Edit `src/config/site.ts` to customize:
 - `navigation.tweets`: Label for tweets link
 - `navigation.about`: Label for about link
 
-#### Theme Colors
-All colors can be customized in `siteConfig.theme`:
-- Primary colors: `primary`, `primaryHover`, `secondary`, `secondaryHover`, `accent`, `accentHover`
-- Text colors: `textPrimary`, `textSecondary`, `textMuted`, `textInverse`
-- Background colors: `bgPrimary`, `bgSecondary`, `bgTertiary`, `bgDark`
-- Border colors: `borderLight`, `borderMedium`, `borderDotted`
-- Icon colors: `iconHeart`, `iconRetweet`, `iconComment`, `iconQuote`, `iconTwitter`, `iconGithub`, `iconYoutube`
-
-Colors are automatically applied as CSS variables throughout the site.
-
-#### About Page Content
-
-Customize the About page content in `siteConfig.about`:
-- `pageTitle`: Title of the about page
-- `sections`: Configure each section with titles, paragraphs, links, and lists
-
-### 3. Search Configuration
+### 5. Search Configuration
 
 Edit `src/config/search.ts` to customize search behavior and UI text.
 

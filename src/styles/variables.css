@@ -1,30 +1,8 @@
-/* CSS Custom Properties for Theming */
+/* CSS Custom Properties - Non-color variables only */
+/* Color variables are generated from astro.config.mjs via generateThemeCSS() */
+/* This ensures all colors come from the configuration, not hardcoded values */
+
 :root {
-  /* Colors (based on blog.andi95.de) */
-  --color-primary: #0F1C33; /* Dark blue from blog */
-  --color-primary-hover: #1a2d4d;
-  --color-secondary: #C0C0C0; /* Silver/metallic */
-  --color-secondary-hover: #D3D3D3;
-  --color-accent: #C0C0C0; /* Silver for accents */
-  --color-accent-hover: #E0E0E0;
-  
-  /* Text Colors */
-  --color-text-primary: #FFFFFF; /* White */
-  --color-text-secondary: #E0E0E0; /* Light gray */
-  --color-text-muted: #B0B0B0; /* Gray */
-  --color-text-inverse: #0F1C33; /* Dark blue for Light Mode */
-  
-  /* Background Colors */
-  --color-bg-primary: #0F1C33; /* Dark blue */
-  --color-bg-secondary: #1a2d4d; /* Slightly lighter dark blue */
-  --color-bg-tertiary: #253d5f; /* Even lighter for cards */
-  --color-bg-dark: #0a1526; /* Very dark */
-  
-  /* Border Colors */
-  --color-border-light: #3a4d6b; /* Dark gray for Dark Mode */
-  --color-border-medium: #4a5d7b;
-  --color-border-dotted: #6a7d9b;
-  
   /* Typography */
   --font-family-base: sans-serif;
   --font-size-base: 1rem;
@@ -63,47 +41,7 @@
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  
-  /* Icon Colors */
-  --icon-heart: #e91e63;
-  --icon-retweet: #00bcd4;
-  --icon-comment: #2196f3;
-  --icon-quote: #9c27b0;
-  --icon-twitter: #1da1f2;
-  --icon-github: #333;
-  --icon-youtube: #ff0000;
 }
 
-/* Light Mode (optional, if Dark Mode is disabled) */
-[data-theme="light"] {
-  /* Primary colors */
-  --color-primary: #0F1C33;
-  --color-primary-hover: #1a2d4d;
-  --color-secondary: #C0C0C0;
-  --color-secondary-hover: #D3D3D3;
-  --color-accent: #00539F;
-  --color-accent-hover: #0066cc;
-  
-  /* Text Colors */
-  --color-text-primary: #0F1C33;
-  --color-text-secondary: #4a5d7b;
-  --color-text-muted: #6a7d9b;
-  --color-text-inverse: #FFFFFF;
-  
-  /* Background Colors */
-  --color-bg-primary: #f1f5f9;
-  --color-bg-secondary: #fff;
-  --color-bg-tertiary: #F8FCFD;
-  --color-bg-dark: #0F1C33;
-  
-  /* Border Colors */
-  --color-border-light: #eee;
-  --color-border-medium: #dee2e6;
-  --color-border-dotted: #a1a1a1;
-}
-
-/* Dark Mode (default) */
-[data-theme="dark"],
-:root {
-  /* Already defined above, here for clarity */
-}
+/* Light/Dark mode color overrides are handled by generateThemeCSS() */
+/* All color variables (--color-*, --icon-*) are generated dynamically */
