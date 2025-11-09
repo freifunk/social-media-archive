@@ -1,0 +1,126 @@
+---
+// Theme Toggle Component for Dark/Light Mode
+---
+
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+  <i class="fas fa-sun theme-icon theme-icon-sun"></i>
+  <i class="fas fa-moon theme-icon theme-icon-moon"></i>
+</button>
+
+<style>
+  .theme-toggle {
+    background: transparent;
+    border: 2px solid var(--color-border-medium);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: all var(--transition-fast);
+    color: var(--color-text-primary);
+    position: relative;
+  }
+
+  .theme-toggle:hover {
+    background: var(--color-bg-tertiary);
+    border-color: var(--color-accent);
+    transform: scale(1.05);
+  }
+
+  .theme-icon {
+    font-size: 20px;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .theme-icon-sun {
+    position: absolute;
+  }
+
+  .theme-icon-moon {
+    position: absolute;
+  }
+
+  /* Dark Mode: Show sun icon (button indicates can switch to Light) */
+  [data-theme="dark"] .theme-icon-sun {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+
+  [data-theme="dark"] .theme-icon-moon {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+
+  /* Light Mode: Show moon icon (button indicates can switch to Dark) */
+  [data-theme="light"] .theme-icon-sun {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+
+  [data-theme="light"] .theme-icon-moon {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+</style>
+
+<script>
+  (function() {
+    // Theme management
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    
+    // Get system preference
+    function getSystemPreference() {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    }
+    
+    // Read theme from localStorage or use system preference
+    function getInitialTheme() {
+      const stored = localStorage.getItem('theme');
+      if (stored) {
+        return stored; // Manual preference takes precedence
+      }
+      // Use system preference
+      return getSystemPreference();
+    }
+    
+    // Set theme
+    function setTheme(theme, saveToStorage = true) {
+      html.setAttribute('data-theme', theme);
+      if (saveToStorage) {
+        localStorage.setItem('theme', theme);
+      }
+    }
+    
+    // Set initial theme
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+    
+    // Listen for system preference changes (only if no manual preference is set)
+    if (window.matchMedia) {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', (e) => {
+        // Only update if no manual preference is stored
+        if (!localStorage.getItem('theme')) {
+          setTheme(e.matches ? 'dark' : 'light', false);
+        }
+      });
+    }
+    
+    // Toggle event
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme') || getSystemPreference();
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+      });
+    }
+  })();
+</script>
+
