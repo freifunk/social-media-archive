@@ -1,9 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { siteConfig } from "../config/site";
+import { aboutContent } from "../config/about";
 
-const pageTitle = siteConfig.about.pageTitle;
-const about = siteConfig.about.sections;
+// Get about content from config/about.ts
+const pageTitle = aboutContent.pageTitle;
+const about = aboutContent.sections;
 ---
 
 <BaseLayout pageTitle={pageTitle}>

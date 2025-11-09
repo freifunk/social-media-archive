@@ -10,7 +10,7 @@
 <style>
   .theme-toggle {
     background: transparent;
-    border: 2px solid var(--color-border-medium);
+    border: 2px solid var(--color-primary); /* Magenta border */
     border-radius: var(--border-radius-md);
     padding: var(--spacing-sm);
     cursor: pointer;
@@ -20,13 +20,14 @@
     width: 40px;
     height: 40px;
     transition: all var(--transition-fast);
-    color: var(--color-text-primary);
+    color: var(--color-primary); /* Magenta icon color */
     position: relative;
   }
 
   .theme-toggle:hover {
-    background: var(--color-bg-tertiary);
-    border-color: var(--color-accent);
+    background: var(--color-primary); /* Magenta background on hover */
+    border-color: var(--color-primary);
+    color: var(--color-text-inverse); /* White icon on magenta background */
     transform: scale(1.05);
   }
 
