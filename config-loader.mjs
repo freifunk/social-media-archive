@@ -87,8 +87,7 @@ const defaultConfig = {
   },
   
   favicons: {
-    favicon32x32: '/favicon-32x32.png',
-    favicon192x192: '/favicon-192x192.png',
+    favicon32x32: '/favicon.ico',
     appleTouchIcon: '/apple-touch-icon.png'
   }
 };
