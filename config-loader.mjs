@@ -103,9 +103,24 @@ try {
   // Get the directory of the current module
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const customConfigPath = path.join(__dirname, 'custom.config.mjs');
   
-  if (fs.existsSync(customConfigPath)) {
+  // Try multiple possible locations for custom.config.mjs
+  // 1. Same directory as config-loader.mjs (works in dev)
+  // 2. Process working directory (works in build/preview)
+  const possiblePaths = [
+    path.join(__dirname, 'custom.config.mjs'),
+    path.join(process.cwd(), 'custom.config.mjs'),
+  ];
+  
+  let customConfigPath = null;
+  for (const possiblePath of possiblePaths) {
+    if (fs.existsSync(possiblePath)) {
+      customConfigPath = possiblePath;
+      break;
+    }
+  }
+  
+  if (customConfigPath) {
     // Use dynamic import with file:// URL to prevent static analysis by Vite/Rollup
     const customConfigUrl = pathToFileURL(customConfigPath).href;
     const customModule = await import(customConfigUrl);
