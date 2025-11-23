@@ -15,11 +15,11 @@ jobs:
       uses: actions/checkout@v5
       
     - name: Create custom.config.mjs from secret
+      env:
+        CUSTOM_CONFIG: ${{ secrets.CUSTOM_CONFIG }}
       run: |
-        if [ -n "${{ secrets.CUSTOM_CONFIG }}" ]; then
-          cat > custom.config.mjs << 'EOF'
-          ${{ secrets.CUSTOM_CONFIG }}
-          EOF
+        if [ -n "$CUSTOM_CONFIG" ]; then
+          echo "$CUSTOM_CONFIG" > custom.config.mjs
           echo "custom.config.mjs created from secret"
         else
           echo "CUSTOM_CONFIG secret not set, skipping custom.config.mjs creation"
