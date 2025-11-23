@@ -82,18 +82,12 @@ const defaultConfig = {
   logo: {
     alt: 'Freifunk Logo',
     possibleNames: [
-      'logo.png',
-      'logo.svg',
-      'logo.jpg',
-      'logo.jpeg',
-      'logo.webp',
       'logo_freifunknet.png', // fallback to original logo
     ]
   },
   
   favicons: {
-    favicon32x32: '/favicon-32x32.png',
-    favicon192x192: '/favicon-192x192.png',
+    favicon32x32: '/favicon.ico',
     appleTouchIcon: '/apple-touch-icon.png'
   }
 };
