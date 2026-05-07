@@ -7,10 +7,10 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/preact": "^4.1.0",
+    "@astrojs/preact": "^5.0.0",
     "@astrojs/rss": "^4.0.12",
     "@fortawesome/fontawesome-free": "^7.0.0",
-    "astro": "^5.10.1",
+    "astro": "^6.0.0",
     "dompurify": "^3.2.6",
     "fuse.js": "^7.1.0",
     "marked": "^17.0.0",
